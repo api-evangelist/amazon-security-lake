@@ -8,11 +8,11 @@ description: >-
 type: Index
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 tags:
-  - Security
+  - AWS
   - Data Lake
+  - Security
   - SIEM
   - Threat Detection
-  - AWS
 url: >-
   https://raw.githubusercontent.com/api-evangelist/amazon-security-lake/refs/heads/main/apis.yml
 created: '2026-03-16'
@@ -28,8 +28,8 @@ apis:
     humanURL: https://aws.amazon.com/security-lake/
     baseURL: https://securitylake.amazonaws.com
     tags:
-      - Security
       - Data Lake
+      - Security
       - Threat Detection
     properties:
       - type: Documentation
