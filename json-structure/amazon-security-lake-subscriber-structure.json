@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/amazon-security-lake/refs/heads/main/json-structure/amazon-security-lake-subscriber-structure.json",
+  "name": "Subscriber",
+  "description": "Represents a subscriber for Amazon Security Lake data.",
+  "type": "object",
+  "properties": {
+    "subscriberId": {
+      "type": "string",
+      "description": "The unique identifier for the subscriber.",
+      "example": "sub-a1b2c3d4"
+    },
+    "subscriberArn": {
+      "type": "string",
+      "description": "The ARN of the subscriber.",
+      "example": "arn:aws:securitylake:us-east-1:123456789012:subscriber/sub-a1b2c3d4"
+    },
+    "subscriberName": {
+      "type": "string",
+      "description": "The name of the subscriber.",
+      "example": "MySIEMSubscriber"
+    },
+    "subscriberDescription": {
+      "type": "string",
+      "description": "A description of the subscriber."
+    },
+    "subscriberStatus": {
+      "type": "string",
+      "description": "The status of the subscriber.",
+      "enum": [
+        "ACTIVE",
+        "DEACTIVATED",
+        "PENDING",
+        "READY"
+      ],
+      "example": "ACTIVE"
+    },
+    "accessTypes": {
+      "type": "array",
+      "description": "The access types granted to the subscriber.",
+      "items": {
+        "type": "string",
+        "enum": [
+          "LAKEFORMATION",
+          "S3"
+        ]
+      }
+    },
+    "resourceShareArn": {
+      "type": "string",
+      "description": "The ARN of the resource share for AWS RAM-based access."
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when the subscriber was created."
+    },
+    "updatedAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when the subscriber was last updated."
+    }
+  }
+}

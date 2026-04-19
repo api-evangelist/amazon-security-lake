@@ -1,0 +1,184 @@
+naftiko: "1.0.0-alpha1"
+
+info:
+  label: "Amazon Security Lake Security Data Lake"
+  description: "Unified capability for managing a centralized security data lake including data lake configuration, log source ingestion, and subscriber access management. Used by Security Data Engineers and CISO teams."
+  tags:
+    - Amazon Security Lake
+    - Security
+    - Data Lake
+    - SIEM
+    - OCSF
+  created: "2026-04-19"
+  modified: "2026-04-19"
+
+binds:
+  - namespace: env
+    keys:
+      AWS_ACCESS_KEY_ID: AWS_ACCESS_KEY_ID
+      AWS_SECRET_ACCESS_KEY: AWS_SECRET_ACCESS_KEY
+      AWS_REGION: AWS_REGION
+
+capability:
+  consumes:
+    - import: amazon-security-lake
+      location: ./shared/amazon-security-lake.yaml
+
+  exposes:
+    - type: rest
+      port: 8080
+      namespace: security-data-lake-api
+      description: "Unified REST API for Amazon Security Lake security data lake management."
+      resources:
+        - path: /v1/data-lakes
+          name: data-lakes
+          description: "Security data lake lifecycle management"
+          operations:
+            - method: GET
+              name: list-data-lakes
+              description: "List all security data lake configurations"
+              call: "amazon-security-lake.list-data-lakes"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: POST
+              name: create-data-lake
+              description: "Create a new security data lake"
+              call: "amazon-security-lake.create-data-lake"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/log-sources
+          name: log-sources
+          description: "Security log source management"
+          operations:
+            - method: GET
+              name: list-log-sources
+              description: "List all configured log sources"
+              call: "amazon-security-lake.list-log-sources"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: POST
+              name: add-aws-log-source
+              description: "Add a native AWS log source"
+              call: "amazon-security-lake.create-aws-log-source"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/subscribers
+          name: subscribers
+          description: "Data subscriber access management"
+          operations:
+            - method: GET
+              name: list-subscribers
+              description: "List all data lake subscribers"
+              call: "amazon-security-lake.list-subscribers"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: POST
+              name: create-subscriber
+              description: "Create a new subscriber for data access"
+              call: "amazon-security-lake.create-subscriber"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+    - type: mcp
+      port: 9090
+      namespace: security-data-lake-mcp
+      transport: http
+      description: "MCP server for AI-assisted Amazon Security Lake security data lake management."
+      tools:
+        - name: list-data-lakes
+          description: "List all Amazon Security Lake data lake configurations"
+          hints:
+            readOnly: true
+            idempotent: true
+          call: "amazon-security-lake.list-data-lakes"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: create-data-lake
+          description: "Create a new Amazon Security Lake data lake"
+          hints:
+            readOnly: false
+            idempotent: false
+          call: "amazon-security-lake.create-data-lake"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-data-lake-sources
+          description: "Get data lake source status across accounts and regions"
+          hints:
+            readOnly: true
+            idempotent: true
+          call: "amazon-security-lake.get-data-lake-sources"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: list-log-sources
+          description: "List all log sources configured in Security Lake"
+          hints:
+            readOnly: true
+            idempotent: true
+          call: "amazon-security-lake.list-log-sources"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: add-aws-log-source
+          description: "Enable a native AWS log source in Security Lake"
+          hints:
+            readOnly: false
+            idempotent: false
+          call: "amazon-security-lake.create-aws-log-source"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: add-custom-log-source
+          description: "Add a custom third-party log source to Security Lake"
+          hints:
+            readOnly: false
+            idempotent: false
+          call: "amazon-security-lake.create-custom-log-source"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: list-subscribers
+          description: "List all Security Lake data subscribers"
+          hints:
+            readOnly: true
+            idempotent: true
+          call: "amazon-security-lake.list-subscribers"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: create-subscriber
+          description: "Create a subscriber for Security Lake data access"
+          hints:
+            readOnly: false
+            idempotent: false
+          call: "amazon-security-lake.create-subscriber"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-subscriber
+          description: "Get details about a specific Security Lake subscriber"
+          hints:
+            readOnly: true
+            idempotent: true
+          call: "amazon-security-lake.get-subscriber"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: delete-subscriber
+          description: "Delete a Security Lake subscriber"
+          hints:
+            readOnly: false
+            destructive: true
+            idempotent: true
+          call: "amazon-security-lake.delete-subscriber"
+          outputParameters:
+            - type: object
+              mapping: "$."

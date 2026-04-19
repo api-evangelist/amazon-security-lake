@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/amazon-security-lake/refs/heads/main/json-schema/amazon-security-lake-data-lake-schema.json",
+  "title": "DataLake",
+  "description": "Represents an Amazon Security Lake data lake configuration.",
+  "type": "object",
+  "properties": {
+    "dataLakeArn": {
+      "type": "string",
+      "description": "The ARN of the data lake.",
+      "example": "arn:aws:securitylake:us-east-1:123456789012:data-lake/default"
+    },
+    "region": {
+      "type": "string",
+      "description": "The AWS region where the data lake is configured.",
+      "example": "us-east-1"
+    },
+    "status": {
+      "type": "string",
+      "description": "The current status of the data lake.",
+      "enum": [
+        "INITIALIZED",
+        "PENDING",
+        "COMPLETED",
+        "FAILED"
+      ],
+      "example": "INITIALIZED"
+    },
+    "encryptionConfiguration": {
+      "type": "object",
+      "description": "The encryption configuration for the data lake.",
+      "properties": {
+        "kmsKeyId": {
+          "type": "string",
+          "description": "The KMS key ID for encryption."
+        }
+      }
+    },
+    "lifecycleConfiguration": {
+      "type": "object",
+      "description": "The lifecycle configuration for the data lake.",
+      "properties": {
+        "expiration": {
+          "type": "object",
+          "properties": {
+            "days": {
+              "type": "integer"
+            }
+          }
+        },
+        "transitions": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        }
+      }
+    },
+    "s3BucketArn": {
+      "type": "string",
+      "description": "The ARN of the S3 bucket where security data is stored.",
+      "example": "arn:aws:s3:::aws-security-data-lake-us-east-1-abc123"
+    }
+  }
+}

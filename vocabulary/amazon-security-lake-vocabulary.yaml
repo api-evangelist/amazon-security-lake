@@ -1,0 +1,152 @@
+vocabulary: "1.0.0"
+
+info:
+  provider: "Amazon Security Lake"
+  description: "Unified taxonomy mapping operational and capability dimensions of the Amazon Security Lake API for centralized security data management."
+  created: "2026-04-19"
+  modified: "2026-04-19"
+
+operational:
+  apis:
+    - namespace: amazon-security-lake
+      version: "2018-05-10"
+      baseUrl: https://securitylake.{region}.amazonaws.com
+      status: active
+
+  resources:
+    - name: DataLakes
+      api: amazon-security-lake
+      actions: [Create, List, Get, Update, Delete]
+    - name: LogSources
+      api: amazon-security-lake
+      actions: [CreateAws, CreateCustom, List, Delete]
+    - name: Subscribers
+      api: amazon-security-lake
+      actions: [Create, Get, List, Update, Delete]
+    - name: SubscriberNotifications
+      api: amazon-security-lake
+      actions: [Create, Update, Delete]
+    - name: OrganizationConfiguration
+      api: amazon-security-lake
+      actions: [Get, Create, Delete]
+
+  actions:
+    - name: Create
+      httpMethods: [POST]
+      pattern: write
+    - name: Get
+      httpMethods: [GET, POST]
+      pattern: read
+    - name: List
+      httpMethods: [GET, POST]
+      pattern: read
+    - name: Update
+      httpMethods: [PUT, PATCH]
+      pattern: write
+    - name: Delete
+      httpMethods: [DELETE]
+      pattern: destructive
+
+  schemas:
+    core:
+      - name: DataLake
+        description: Security data lake configuration and status
+      - name: LogSource
+        description: A log source providing data to Security Lake
+      - name: Subscriber
+        description: An entity with access to query Security Lake data
+
+  parameters:
+    pagination:
+      - name: nextToken
+        description: Token for paginating through result sets
+      - name: maxResults
+        description: Maximum number of results per page
+    identifiers:
+      - name: subscriberId
+        description: Unique identifier for a Security Lake subscriber
+      - name: dataLakeArn
+        description: ARN of the Security Lake data lake
+
+  enums:
+    dataLakeStatus:
+      - INITIALIZED
+      - PENDING
+      - COMPLETED
+      - FAILED
+    logSourceStatus:
+      - ACTIVE
+      - DEACTIVATED
+      - PENDING
+    subscriberStatus:
+      - ACTIVE
+      - DEACTIVATED
+      - PENDING
+      - READY
+    accessTypes:
+      - LAKEFORMATION
+      - S3
+
+  authentication:
+    schemes:
+      - type: AWS Signature V4
+        description: AWS IAM-based request signing
+        apis: [all]
+
+capability:
+  workflows:
+    - name: Security Data Lake
+      file: capabilities/security-data-lake.yaml
+      description: Centralized security data lake lifecycle including data lake configuration, log source management, and subscriber access
+      apisConsumed: [amazon-security-lake]
+      toolCount: 10
+      personas: [Security Data Engineer, CISO]
+      domains: [Security, Data Engineering]
+
+  personas:
+    - id: security-data-engineer
+      name: Security Data Engineer
+      description: Engineers who configure and manage security data lakes, log sources, and subscriber access
+      workflows: [Security Data Lake]
+    - id: ciso
+      name: CISO
+      description: Security leaders who consume security data for threat intelligence and compliance reporting
+      workflows: [Security Data Lake]
+
+  domains:
+    - name: Security
+      description: Security data centralization and threat analysis
+      resources: [DataLakes, LogSources]
+    - name: Data Engineering
+      description: Data lake infrastructure management and subscriber access control
+      resources: [DataLakes, Subscribers]
+
+  namespaces:
+    consumed:
+      - amazon-security-lake
+    rest:
+      - security-data-lake-api (port 8080)
+    mcp:
+      - security-data-lake-mcp (port 9090)
+
+  binds:
+    - name: AWS_ACCESS_KEY_ID
+      workflows: [Security Data Lake]
+    - name: AWS_SECRET_ACCESS_KEY
+      workflows: [Security Data Lake]
+    - name: AWS_REGION
+      workflows: [Security Data Lake]
+
+crossReference:
+  - resource: DataLakes
+    operations: [CreateDataLake, ListDataLakes, UpdateDataLake, DeleteDataLake]
+    workflows: [Security Data Lake]
+    personas: [Security Data Engineer]
+  - resource: LogSources
+    operations: [CreateAwsLogSource, CreateCustomLogSource, ListLogSources]
+    workflows: [Security Data Lake]
+    personas: [Security Data Engineer]
+  - resource: Subscribers
+    operations: [CreateSubscriber, GetSubscriber, ListSubscribers, UpdateSubscriber, DeleteSubscriber]
+    workflows: [Security Data Lake]
+    personas: [Security Data Engineer, CISO]

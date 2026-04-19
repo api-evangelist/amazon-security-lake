@@ -1,0 +1,11 @@
+{
+  "subscriberId": "a1b2c3d4-e5f6",
+  "subscriberArn": "arn:aws:securitylake:us-east-1:123456789012:resource/subscriberarn",
+  "subscriberName": "my-subscribername",
+  "subscriberDescription": "example-subscriberDescription",
+  "subscriberStatus": "ACTIVE",
+  "accessTypes": [],
+  "resourceShareArn": "arn:aws:securitylake:us-east-1:123456789012:resource/resourcesharearn",
+  "createdAt": "example-createdAt",
+  "updatedAt": "2025-03-15T14:30:00Z"
+}

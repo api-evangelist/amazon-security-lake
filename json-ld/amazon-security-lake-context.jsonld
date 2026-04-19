@@ -1,0 +1,85 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "aws": "https://aws.amazon.com/schema/",
+    "schema": "https://schema.org/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "DataLake": "aws:DataLake",
+    "dataLakeArn": {
+      "@id": "aws:dataLakeArn",
+      "@type": "xsd:string"
+    },
+    "region": {
+      "@id": "aws:region",
+      "@type": "xsd:string"
+    },
+    "status": {
+      "@id": "aws:status",
+      "@type": "xsd:string"
+    },
+    "encryptionConfiguration": {
+      "@id": "aws:encryptionConfiguration",
+      "@type": "xsd:string"
+    },
+    "lifecycleConfiguration": {
+      "@id": "aws:lifecycleConfiguration",
+      "@type": "xsd:string"
+    },
+    "s3BucketArn": {
+      "@id": "aws:s3BucketArn",
+      "@type": "xsd:string"
+    },
+    "LogSource": "aws:LogSource",
+    "sourceName": {
+      "@id": "aws:sourceName",
+      "@type": "xsd:string"
+    },
+    "sourceVersion": {
+      "@id": "aws:sourceVersion",
+      "@type": "xsd:string"
+    },
+    "sourceStatus": {
+      "@id": "aws:sourceStatus",
+      "@type": "xsd:string"
+    },
+    "Subscriber": "aws:Subscriber",
+    "subscriberId": {
+      "@id": "aws:subscriberId",
+      "@type": "xsd:string"
+    },
+    "subscriberArn": {
+      "@id": "aws:subscriberArn",
+      "@type": "xsd:string"
+    },
+    "subscriberName": {
+      "@id": "aws:subscriberName",
+      "@type": "xsd:string"
+    },
+    "subscriberDescription": {
+      "@id": "aws:subscriberDescription",
+      "@type": "xsd:string"
+    },
+    "subscriberStatus": {
+      "@id": "aws:subscriberStatus",
+      "@type": "xsd:string"
+    },
+    "accessTypes": {
+      "@id": "aws:accessTypes",
+      "@container": "@set",
+      "@type": "xsd:string"
+    },
+    "resourceShareArn": {
+      "@id": "aws:resourceShareArn",
+      "@type": "xsd:string"
+    },
+    "createdAt": {
+      "@id": "aws:createdAt",
+      "@type": "xsd:dateTime"
+    },
+    "updatedAt": {
+      "@id": "aws:updatedAt",
+      "@type": "xsd:dateTime"
+    }
+  }
+}

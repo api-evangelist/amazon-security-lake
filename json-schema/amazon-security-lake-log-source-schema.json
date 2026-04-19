@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/amazon-security-lake/refs/heads/main/json-schema/amazon-security-lake-log-source-schema.json",
+  "title": "LogSource",
+  "description": "Represents a log source configured in Amazon Security Lake.",
+  "type": "object",
+  "properties": {
+    "sourceName": {
+      "type": "string",
+      "description": "The name of the log source.",
+      "example": "CLOUD_TRAIL_MGMT"
+    },
+    "sourceVersion": {
+      "type": "string",
+      "description": "The version of the log source.",
+      "example": "2.0"
+    },
+    "sourceStatus": {
+      "type": "string",
+      "description": "The status of the log source.",
+      "enum": [
+        "ACTIVE",
+        "DEACTIVATED",
+        "PENDING"
+      ],
+      "example": "ACTIVE"
+    }
+  }
+}

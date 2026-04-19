@@ -1,0 +1,8 @@
+{
+  "dataLakeArn": "arn:aws:securitylake:us-east-1:123456789012:resource/datalakearn",
+  "region": "example-region",
+  "status": "INITIALIZED",
+  "encryptionConfiguration": {},
+  "lifecycleConfiguration": {},
+  "s3BucketArn": "arn:aws:securitylake:us-east-1:123456789012:resource/s3bucketarn"
+}
