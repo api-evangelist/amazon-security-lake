@@ -1,7 +1,7 @@
-# Amazon Security Lake (amazon-security-lake)
+# Amazon Security Lake
 Amazon Security Lake is a service that automatically centralizes an organization's security data from cloud, on-premises, and custom sources into a purpose-built data lake stored in your own Amazon S3. It manages the data lifecycle to help you optimize storage and supports OCSF (Open Cybersecurity Schema Framework) for normalized security data analysis.
 
-**URL:** [Visit Amazon Security Lake](https://aws.amazon.com/security-lake/)
+**URL:** [Visit APIs.json URL](https://aws.amazon.com/security-lake/)
 
 **Run:** [Capabilities Using Naftiko](https://github.com/naftiko/fleet?utm_source=api-evangelist&utm_medium=readme&utm_campaign=company-api-evangelist&utm_content=repo)
 
@@ -29,9 +29,9 @@ The Amazon Security Lake API provides programmatic access to create and manage d
 
 - [Documentation](https://docs.aws.amazon.com/security-lake/latest/APIReference/Welcome.html)
 - [OpenAPI](openapi/amazon-security-lake-openapi.yml)
-- [JSONSchema - DataLake](json-schema/amazon-security-lake-data-lake-schema.json)
-- [JSONSchema - LogSource](json-schema/amazon-security-lake-log-source-schema.json)
-- [JSONSchema - Subscriber](json-schema/amazon-security-lake-subscriber-schema.json)
+- [JSONSchema](json-schema/amazon-security-lake-data-lake-schema.json)
+- [JSONSchema](json-schema/amazon-security-lake-log-source-schema.json)
+- [JSONSchema](json-schema/amazon-security-lake-subscriber-schema.json)
 
 ## Common Properties
 
@@ -40,6 +40,7 @@ The Amazon Security Lake API provides programmatic access to create and manage d
 - [Documentation](https://docs.aws.amazon.com/security-lake/)
 - [APIReference](https://docs.aws.amazon.com/security-lake/latest/APIReference/)
 - [Console](https://console.aws.amazon.com/securitylake/)
+- [SignUp](https://portal.aws.amazon.com/billing/signup)
 - [Pricing](https://aws.amazon.com/security-lake/pricing/)
 - [FAQ](https://aws.amazon.com/security-lake/faqs/)
 - [Blog](https://aws.amazon.com/blogs/security/tag/amazon-security-lake/)
@@ -47,9 +48,22 @@ The Amazon Security Lake API provides programmatic access to create and manage d
 - [Support](https://aws.amazon.com/premiumsupport/)
 - [TermsOfService](https://aws.amazon.com/service-terms/)
 - [PrivacyPolicy](https://aws.amazon.com/privacy/)
+- [Compliance](https://aws.amazon.com/compliance/)
 - [GitHubOrganization](https://github.com/aws)
 - [YouTube](https://www.youtube.com/user/AmazonWebServices)
 - [StackOverflow](https://stackoverflow.com/questions/tagged/amazon-security-lake)
+- [KnowledgeCenter](https://repost.aws/knowledge-center)
+- [SpectralRules](rules/amazon-security-lake-spectral-rules.yml)
+- [Vocabulary](vocabulary/amazon-security-lake-vocabulary.yaml)
+- [NaftikoCapability](capabilities/security-data-lake.yaml)
+- [JSON-LD](json-ld/amazon-security-lake-context.jsonld)
+- [JSONStructure](json-structure/amazon-security-lake-data-lake-structure.json)
+- [JSONStructure](json-structure/amazon-security-lake-log-source-structure.json)
+- [JSONStructure](json-structure/amazon-security-lake-subscriber-structure.json)
+- [Example](examples/amazon-security-lake-data-lake-example.json)
+- [Example](examples/amazon-security-lake-log-source-example.json)
+- [Example](examples/amazon-security-lake-subscriber-example.json)
+- [NaftikoCapability](capabilities/shared/amazon-security-lake.yaml)
 
 ## Features
 
@@ -96,29 +110,29 @@ Machine-readable API specifications organized by format.
 
 ### OpenAPI
 
-- [Amazon Security Lake API](openapi/amazon-security-lake-openapi.yml)
+- [amazon-security-lake-openapi.yml](openapi/amazon-security-lake-openapi.yml)
 
 ### JSON Schema
 
-- [DataLake](json-schema/amazon-security-lake-data-lake-schema.json)
-- [LogSource](json-schema/amazon-security-lake-log-source-schema.json)
-- [Subscriber](json-schema/amazon-security-lake-subscriber-schema.json)
+- [amazon-security-lake-data-lake-schema.json](json-schema/amazon-security-lake-data-lake-schema.json)
+- [amazon-security-lake-log-source-schema.json](json-schema/amazon-security-lake-log-source-schema.json)
+- [amazon-security-lake-subscriber-schema.json](json-schema/amazon-security-lake-subscriber-schema.json)
 
 ### JSON Structure
 
-- [DataLake](json-structure/amazon-security-lake-data-lake-structure.json)
-- [LogSource](json-structure/amazon-security-lake-log-source-structure.json)
-- [Subscriber](json-structure/amazon-security-lake-subscriber-structure.json)
+- [amazon-security-lake-data-lake-structure.json](json-structure/amazon-security-lake-data-lake-structure.json)
+- [amazon-security-lake-log-source-structure.json](json-structure/amazon-security-lake-log-source-structure.json)
+- [amazon-security-lake-subscriber-structure.json](json-structure/amazon-security-lake-subscriber-structure.json)
 
 ### JSON-LD
 
-- [Amazon Security Lake Context](json-ld/amazon-security-lake-context.jsonld)
+- [amazon-security-lake-context.jsonld](json-ld/amazon-security-lake-context.jsonld)
 
 ### Examples
 
-- [DataLake Example](examples/amazon-security-lake-data-lake-example.json)
-- [LogSource Example](examples/amazon-security-lake-log-source-example.json)
-- [Subscriber Example](examples/amazon-security-lake-subscriber-example.json)
+- [amazon-security-lake-data-lake-example.json](examples/amazon-security-lake-data-lake-example.json)
+- [amazon-security-lake-log-source-example.json](examples/amazon-security-lake-log-source-example.json)
+- [amazon-security-lake-subscriber-example.json](examples/amazon-security-lake-subscriber-example.json)
 
 ## Capabilities
 
@@ -126,24 +140,23 @@ Naftiko capabilities organized as shared per-API definitions composed into custo
 
 ### Shared Per-API Definitions
 
-- [Amazon Security Lake API](capabilities/shared/amazon-security-lake.yaml) — 9 operations for data lake, log source, and subscriber management
+- [amazon-security-lake.yaml](capabilities/shared/amazon-security-lake.yaml)
 
 ### Workflow Capabilities
 
-| Workflow | APIs Combined | Tools | Persona |
-|----------|--------------|-------|---------|
-| [Security Data Lake](capabilities/security-data-lake.yaml) | Amazon Security Lake | 10 | Security Data Engineer, CISO |
+- [security-data-lake.yaml](capabilities/security-data-lake.yaml)
 
 ## Vocabulary
 
-- [Amazon Security Lake Vocabulary](vocabulary/amazon-security-lake-vocabulary.yaml) — Unified taxonomy mapping 5 resources, 5 actions, 1 workflow, and 2 personas across operational (OpenAPI) and capability (Naftiko) dimensions
+- [amazon-security-lake-vocabulary.yaml](vocabulary/amazon-security-lake-vocabulary.yaml)
 
 ## Rules
 
-- [Amazon Security Lake Spectral Rules](rules/amazon-security-lake-spectral-rules.yml) — 21 rules across 9 categories enforcing Amazon Security Lake API conventions
+- [amazon-security-lake-spectral-rules.yml](rules/amazon-security-lake-spectral-rules.yml)
 
 ## Maintainers
 
 **FN:** Kin Lane
 
 **Email:** kin@apievangelist.com
+
