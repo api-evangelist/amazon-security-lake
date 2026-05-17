@@ -7,7 +7,7 @@ description: >-
   (Open Cybersecurity Schema Framework) for normalized security data analysis.
 url: https://aws.amazon.com/security-lake/
 baseURL: https://securitylake.amazonaws.com
-x-type: company
+kind: company
 created: '2026-03-16'
 modified: '2026-04-19'
 
@@ -167,7 +167,7 @@ common:
   - name: CrowdStrike
     description: Ingest CrowdStrike endpoint detection findings as a custom log source.
 
-- type: JSON-LD
+- type: JSONLD
   url: json-ld/amazon-security-lake-context.jsonld
 - type: JSONStructure
   url: json-structure/amazon-security-lake-data-lake-structure.json
