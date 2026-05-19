@@ -1,31 +1,23 @@
 name: Amazon Security Lake
-description: >-
-  Amazon Security Lake is a service that automatically centralizes an
-  organization's security data from cloud, on-premises, and custom sources
-  into a purpose-built data lake stored in your own Amazon S3. It manages
-  the data lifecycle to help you optimize storage and supports OCSF
-  (Open Cybersecurity Schema Framework) for normalized security data analysis.
+description: Amazon Security Lake is a service that automatically centralizes an organization's security data from cloud,
+  on-premises, and custom sources into a purpose-built data lake stored in your own Amazon S3. It manages the data lifecycle
+  to help you optimize storage and supports OCSF (Open Cybersecurity Schema Framework) for normalized security data analysis.
 url: https://aws.amazon.com/security-lake/
 baseURL: https://securitylake.amazonaws.com
 kind: company
 created: '2026-03-16'
-modified: '2026-04-19'
-
+modified: '2026-05-19'
 tags:
 - AWS
 - Data Lake
 - Security
 - SIEM
 - Threat Detection
-
 apis:
-
 - name: Amazon Security Lake API
-  description: >-
-    The Amazon Security Lake API provides programmatic access to create and
-    manage data lakes, data sources, subscribers, and log sources for
-    centralizing and analyzing security data across your organization using
-    the OCSF (Open Cybersecurity Schema Framework).
+  description: The Amazon Security Lake API provides programmatic access to create and manage data lakes, data sources, subscribers,
+    and log sources for centralizing and analyzing security data across your organization using the OCSF (Open Cybersecurity
+    Schema Framework).
   humanURL: https://docs.aws.amazon.com/security-lake/latest/APIReference/Welcome.html
   baseURL: https://securitylake.{region}.amazonaws.com
   tags:
@@ -44,78 +36,61 @@ apis:
     url: json-schema/amazon-security-lake-log-source-schema.json
   - type: JSONSchema
     url: json-schema/amazon-security-lake-subscriber-schema.json
-
+  - type: NaftikoCapability
+    url: capabilities/amazon-security-lake-data-lakes.yaml
+  - type: NaftikoCapability
+    url: capabilities/amazon-security-lake-log-sources.yaml
+  - type: NaftikoCapability
+    url: capabilities/amazon-security-lake-subscribers.yaml
 common:
-
 - type: Portal
   url: https://aws.amazon.com/security-lake/
-
 - type: GettingStarted
   url: https://aws.amazon.com/security-lake/getting-started/
-
 - type: Documentation
   url: https://docs.aws.amazon.com/security-lake/
-
 - type: APIReference
   url: https://docs.aws.amazon.com/security-lake/latest/APIReference/
-
 - type: Console
   url: https://console.aws.amazon.com/securitylake/
-
 - type: SignUp
   url: https://portal.aws.amazon.com/billing/signup
-
 - type: Pricing
   url: https://aws.amazon.com/security-lake/pricing/
-
 - type: FAQ
   url: https://aws.amazon.com/security-lake/faqs/
-
 - type: Blog
   url: https://aws.amazon.com/blogs/security/tag/amazon-security-lake/
-
 - type: StatusPage
   url: https://health.aws.amazon.com/health/status
-
 - type: Support
   url: https://aws.amazon.com/premiumsupport/
-
 - type: TermsOfService
   url: https://aws.amazon.com/service-terms/
-
 - type: PrivacyPolicy
   url: https://aws.amazon.com/privacy/
-
 - type: Compliance
   url: https://aws.amazon.com/compliance/
-
 - type: GitHubOrganization
   url: https://github.com/aws
-
 - type: YouTube
   url: https://www.youtube.com/user/AmazonWebServices
-
 - type: StackOverflow
   url: https://stackoverflow.com/questions/tagged/amazon-security-lake
-
 - type: KnowledgeCenter
   url: https://repost.aws/knowledge-center
-
 - type: SpectralRules
   url: rules/amazon-security-lake-spectral-rules.yml
-
 - type: Vocabulary
   url: vocabulary/amazon-security-lake-vocabulary.yaml
-
-- type: NaftikoCapability
-  url: capabilities/security-data-lake.yaml
-
 - type: Features
   data:
   - name: Automatic Data Centralization
-    description: Automatically centralizes security data from AWS services, third-party tools, and custom sources into a single data lake.
+    description: Automatically centralizes security data from AWS services, third-party tools, and custom sources into a single
+      data lake.
   - name: OCSF Normalization
-    description: Converts security data to the Open Cybersecurity Schema Framework (OCSF) for standardized analysis across tools.
+    description: Converts security data to the Open Cybersecurity Schema Framework (OCSF) for standardized analysis across
+      tools.
   - name: Apache Parquet Format
     description: Stores all security data in Apache Parquet format optimized for analytical query performance.
   - name: Multi-Account Support
@@ -128,13 +103,13 @@ common:
     description: Native connectors for CloudTrail, VPC Flow Logs, Route 53, Security Hub, and EKS audit logs.
   - name: Custom Log Sources
     description: Ingest custom and third-party security data sources in OCSF format.
-
 - type: UseCases
   data:
   - name: Security Data Centralization
     description: Aggregate all security data from across a multi-account AWS environment into one queryable data lake.
   - name: SIEM Integration
-    description: Provide SIEM platforms like Splunk, Sumo Logic, and Microsoft Sentinel direct access to normalized security data.
+    description: Provide SIEM platforms like Splunk, Sumo Logic, and Microsoft Sentinel direct access to normalized security
+      data.
   - name: Threat Hunting
     description: Enable security analysts to query normalized OCSF data for threat hunting and forensic investigation.
   - name: Compliance Data Retention
@@ -143,7 +118,6 @@ common:
     description: Run advanced analytics and ML models against normalized security data for anomaly detection.
   - name: Multi-Cloud Security Data
     description: Centralize security data from on-premises and other cloud providers alongside AWS security data.
-
 - type: Integrations
   data:
   - name: AWS CloudTrail
@@ -166,7 +140,6 @@ common:
     description: Connect Microsoft Sentinel as a subscriber to consume OCSF-normalized data.
   - name: CrowdStrike
     description: Ingest CrowdStrike endpoint detection findings as a custom log source.
-
 - type: JSONLD
   url: json-ld/amazon-security-lake-context.jsonld
 - type: JSONStructure
@@ -181,19 +154,17 @@ common:
   url: examples/amazon-security-lake-log-source-example.json
 - type: Example
   url: examples/amazon-security-lake-subscriber-example.json
-- type: NaftikoCapability
-  url: capabilities/shared/amazon-security-lake.yaml
 - type: Integrations
   url: https://aws.amazon.com/partners/
 integrations:
-  - name: Partner Programs
-  - name: Resources
-  - name: Success Stories
-  - name: Work with an AWS Partner
-  - name: AWS Marketplace
-  - name: AWS Partner Central
-  - name: Partner Paths
-  - name: co-sell with AWS
+- name: Partner Programs
+- name: Resources
+- name: Success Stories
+- name: Work with an AWS Partner
+- name: AWS Marketplace
+- name: AWS Partner Central
+- name: Partner Paths
+- name: co-sell with AWS
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com

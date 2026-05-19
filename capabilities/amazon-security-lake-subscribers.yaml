@@ -1,0 +1,241 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Amazon Security Lake API — Subscribers
+  description: 'Amazon Security Lake API — Subscribers. 5 operations. Lead operation: Amazon Security Lake Create Subscriber.
+    Self-contained Naftiko capability covering one Amazon Security Lake business surface.'
+  tags:
+  - Amazon Security Lake
+  - Subscribers
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    AMAZON_SECURITY_LAKE_API_KEY: AMAZON_SECURITY_LAKE_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: amazon-security-lake-subscribers
+    baseUri: https://securitylake.{region}.amazonaws.com
+    description: Amazon Security Lake API — Subscribers business capability. Self-contained, no shared references.
+    resources:
+    - name: v1-subscribers
+      path: /v1/subscribers
+      operations:
+      - name: createsubscriber
+        method: POST
+        description: Amazon Security Lake Create Subscriber
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: listsubscribers
+        method: GET
+        description: Amazon Security Lake List Subscribers
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: maxResults
+          in: query
+          type: integer
+          description: Maximum number of results to return.
+        - name: nextToken
+          in: query
+          type: string
+          description: Pagination token.
+    - name: v1-subscribers-subscriberId
+      path: /v1/subscribers/{subscriberId}
+      operations:
+      - name: getsubscriber
+        method: GET
+        description: Amazon Security Lake Get Subscriber
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: subscriberId
+          in: path
+          type: string
+          description: The ID of the subscriber to retrieve.
+          required: true
+      - name: updatesubscriber
+        method: PUT
+        description: Amazon Security Lake Update Subscriber
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: subscriberId
+          in: path
+          type: string
+          description: The ID of the subscriber to update.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: deletesubscriber
+        method: DELETE
+        description: Amazon Security Lake Delete Subscriber
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: subscriberId
+          in: path
+          type: string
+          description: The ID of the subscriber to delete.
+          required: true
+    authentication:
+      type: apikey
+      key: Authorization
+      value: '{{env.AMAZON_SECURITY_LAKE_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: amazon-security-lake-subscribers-rest
+    port: 8080
+    description: REST adapter for Amazon Security Lake API — Subscribers. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/v1/subscribers
+      name: v1-subscribers
+      description: REST surface for v1-subscribers.
+      operations:
+      - method: POST
+        name: createsubscriber
+        description: Amazon Security Lake Create Subscriber
+        call: amazon-security-lake-subscribers.createsubscriber
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: GET
+        name: listsubscribers
+        description: Amazon Security Lake List Subscribers
+        call: amazon-security-lake-subscribers.listsubscribers
+        with:
+          maxResults: rest.maxResults
+          nextToken: rest.nextToken
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/subscribers/{subscriberid}
+      name: v1-subscribers-subscriberid
+      description: REST surface for v1-subscribers-subscriberId.
+      operations:
+      - method: GET
+        name: getsubscriber
+        description: Amazon Security Lake Get Subscriber
+        call: amazon-security-lake-subscribers.getsubscriber
+        with:
+          subscriberId: rest.subscriberId
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: updatesubscriber
+        description: Amazon Security Lake Update Subscriber
+        call: amazon-security-lake-subscribers.updatesubscriber
+        with:
+          subscriberId: rest.subscriberId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deletesubscriber
+        description: Amazon Security Lake Delete Subscriber
+        call: amazon-security-lake-subscribers.deletesubscriber
+        with:
+          subscriberId: rest.subscriberId
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: amazon-security-lake-subscribers-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Amazon Security Lake API — Subscribers. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: amazon-security-lake-create-subscriber
+      description: Amazon Security Lake Create Subscriber
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: amazon-security-lake-subscribers.createsubscriber
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: amazon-security-lake-list-subscribers
+      description: Amazon Security Lake List Subscribers
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: amazon-security-lake-subscribers.listsubscribers
+      with:
+        maxResults: tools.maxResults
+        nextToken: tools.nextToken
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: amazon-security-lake-get-subscriber
+      description: Amazon Security Lake Get Subscriber
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: amazon-security-lake-subscribers.getsubscriber
+      with:
+        subscriberId: tools.subscriberId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: amazon-security-lake-update-subscriber
+      description: Amazon Security Lake Update Subscriber
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: amazon-security-lake-subscribers.updatesubscriber
+      with:
+        subscriberId: tools.subscriberId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: amazon-security-lake-delete-subscriber
+      description: Amazon Security Lake Delete Subscriber
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: amazon-security-lake-subscribers.deletesubscriber
+      with:
+        subscriberId: tools.subscriberId
+      outputParameters:
+      - type: object
+        mapping: $.
