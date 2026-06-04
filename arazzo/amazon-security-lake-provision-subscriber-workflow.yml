@@ -1,0 +1,124 @@
+arazzo: 1.0.1
+info:
+  title: Amazon Security Lake Provision Subscriber
+  summary: Create a subscriber, confirm its identity and status, and verify it is listed.
+  description: >-
+    Provisions a data subscriber (such as a SIEM or analytics consumer) for an
+    enabled Amazon Security Lake account and verifies it is ready. The workflow
+    creates the subscriber with its identity, sources, and access types, reads
+    the subscriber back to confirm its provisioned status, branches on whether
+    the subscriber is active or still pending, and lists subscribers to confirm
+    it is registered for the account. Every step spells out its request inline
+    so the flow can be read and executed without opening the underlying OpenAPI
+    description.
+  version: 1.0.0
+sourceDescriptions:
+- name: securityLakeApi
+  url: ../openapi/amazon-security-lake-openapi.yml
+  type: openapi
+workflows:
+- workflowId: provision-subscriber
+  summary: Create a subscriber and verify it is provisioned and listed.
+  description: >-
+    Creates a subscriber with its identity and source access, reads it back to
+    confirm status, branches on active versus pending, and lists subscribers to
+    confirm registration.
+  inputs:
+    type: object
+    required:
+    - subscriberName
+    - subscriberIdentity
+    - sources
+    properties:
+      subscriberName:
+        type: string
+        description: The name of the subscriber to create.
+      subscriberDescription:
+        type: string
+        description: A description of the subscriber.
+      subscriberIdentity:
+        type: object
+        description: The identity (external ID and principal) of the subscriber.
+        properties:
+          externalId:
+            type: string
+          principal:
+            type: string
+      sources:
+        type: array
+        description: The AWS log sources and log types to subscribe to.
+        items:
+          type: object
+      accessTypes:
+        type: array
+        description: The access types granted to the subscriber (LAKEFORMATION, S3).
+        items:
+          type: string
+  steps:
+  - stepId: createSubscriber
+    description: >-
+      Create the subscriber for the enabled account with the supplied identity,
+      sources, and access types.
+    operationId: CreateSubscriber
+    requestBody:
+      contentType: application/json
+      payload:
+        subscriberName: $inputs.subscriberName
+        subscriberDescription: $inputs.subscriberDescription
+        subscriberIdentity: $inputs.subscriberIdentity
+        sources: $inputs.sources
+        accessTypes: $inputs.accessTypes
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      subscriberId: $response.body#/subscriberId
+      subscriberArn: $response.body#/subscriberArn
+      subscriberStatus: $response.body#/subscriberStatus
+  - stepId: getSubscriber
+    description: >-
+      Read the subscriber back by ID to confirm its provisioned status and
+      capture its ARN and resource share details.
+    operationId: GetSubscriber
+    parameters:
+    - name: subscriberId
+      in: path
+      value: $steps.createSubscriber.outputs.subscriberId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      subscriberId: $response.body#/subscriberId
+      subscriberStatus: $response.body#/subscriberStatus
+    onSuccess:
+    - name: subscriberActive
+      type: goto
+      stepId: listSubscribers
+      criteria:
+      - context: $response.body
+        condition: $.subscriberStatus == "ACTIVE"
+        type: jsonpath
+    - name: subscriberPending
+      type: goto
+      stepId: listSubscribers
+      criteria:
+      - context: $response.body
+        condition: $.subscriberStatus == "PENDING"
+        type: jsonpath
+  - stepId: listSubscribers
+    description: >-
+      List the subscribers for the account to confirm the new subscriber is
+      registered.
+    operationId: ListSubscribers
+    parameters:
+    - name: maxResults
+      in: query
+      value: 50
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      subscribers: $response.body#/subscribers
+      nextToken: $response.body#/nextToken
+  outputs:
+    subscriberId: $steps.createSubscriber.outputs.subscriberId
+    subscriberArn: $steps.createSubscriber.outputs.subscriberArn
+    subscriberStatus: $steps.getSubscriber.outputs.subscriberStatus
+    subscribers: $steps.listSubscribers.outputs.subscribers

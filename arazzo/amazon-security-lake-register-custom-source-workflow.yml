@@ -1,0 +1,91 @@
+arazzo: 1.0.1
+info:
+  title: Amazon Security Lake Register Custom Source
+  summary: Register a third-party custom log source and confirm it appears in the source list.
+  description: >-
+    Registers a third-party custom source in Amazon Security Lake so external
+    log data can be stored in OCSF form, then confirms it is in place. The
+    workflow creates the custom log source with its provider configuration,
+    captures the returned source name, version, and status, branches on whether
+    the source came back active, and lists the region's log sources to confirm
+    the custom source is registered. Every step spells out its request inline so
+    the flow can be read and executed without opening the underlying OpenAPI
+    description.
+  version: 1.0.0
+sourceDescriptions:
+- name: securityLakeApi
+  url: ../openapi/amazon-security-lake-openapi.yml
+  type: openapi
+workflows:
+- workflowId: register-custom-source
+  summary: Create a custom log source and verify it is registered in the region.
+  description: >-
+    Adds a third-party custom log source with its configuration, branches on the
+    returned source status, and lists log sources to confirm the custom source
+    is registered.
+  inputs:
+    type: object
+    required:
+    - sourceName
+    - configuration
+    properties:
+      sourceName:
+        type: string
+        description: The name of the custom log source to register.
+      sourceVersion:
+        type: string
+        description: The version of the custom log source.
+      configuration:
+        type: object
+        description: The provider and access configuration for the custom log source.
+  steps:
+  - stepId: createCustomLogSource
+    description: >-
+      Register the third-party custom source so Amazon Security Lake can store
+      its log data.
+    operationId: CreateCustomLogSource
+    requestBody:
+      contentType: application/json
+      payload:
+        sourceName: $inputs.sourceName
+        sourceVersion: $inputs.sourceVersion
+        configuration: $inputs.configuration
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      sourceName: $response.body#/sourceName
+      sourceVersion: $response.body#/sourceVersion
+      sourceStatus: $response.body#/sourceStatus
+    onSuccess:
+    - name: sourceActive
+      type: goto
+      stepId: listLogSources
+      criteria:
+      - context: $response.body
+        condition: $.sourceStatus == "ACTIVE"
+        type: jsonpath
+    - name: sourcePending
+      type: goto
+      stepId: listLogSources
+      criteria:
+      - context: $response.body
+        condition: $.sourceStatus == "PENDING"
+        type: jsonpath
+  - stepId: listLogSources
+    description: >-
+      List the log sources in the current region to confirm the custom source
+      has been registered.
+    operationId: ListLogSources
+    parameters:
+    - name: maxResults
+      in: query
+      value: 50
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      sources: $response.body#/sources
+      nextToken: $response.body#/nextToken
+  outputs:
+    sourceName: $steps.createCustomLogSource.outputs.sourceName
+    sourceStatus: $steps.createCustomLogSource.outputs.sourceStatus
+    sources: $steps.listLogSources.outputs.sources

@@ -1,0 +1,118 @@
+arazzo: 1.0.1
+info:
+  title: Amazon Security Lake Provision Data Lake
+  summary: Create a Security Lake data lake, confirm it is listed, and inspect its collecting sources.
+  description: >-
+    Stands up a new Amazon Security Lake data lake in a target region and then
+    verifies it is operational. The workflow creates the data lake with an
+    encryption and lifecycle configuration, lists the account's data lakes to
+    confirm the new lake is registered and capture its ARN and status, branches
+    on whether the lake reports a terminal status, and finally retrieves a
+    snapshot of the sources the lake is collecting data from. Every step spells
+    out its request inline so the flow can be read and executed without opening
+    the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: securityLakeApi
+  url: ../openapi/amazon-security-lake-openapi.yml
+  type: openapi
+workflows:
+- workflowId: provision-data-lake
+  summary: Create a data lake in a region and verify it is registered and collecting sources.
+  description: >-
+    Creates a Security Lake data lake, lists data lakes to confirm registration
+    and capture the ARN, branches on the reported status, and reads back the
+    sources the lake is collecting.
+  inputs:
+    type: object
+    required:
+    - region
+    - metaStoreManagerRoleArn
+    properties:
+      region:
+        type: string
+        description: The AWS region in which to configure the data lake (e.g. us-east-1).
+      metaStoreManagerRoleArn:
+        type: string
+        description: The ARN of the IAM role for the metadata store manager.
+      kmsKeyId:
+        type: string
+        description: The KMS key ID used to encrypt data at rest in the data lake.
+      expirationDays:
+        type: integer
+        description: Number of days after which collected data expires.
+      accounts:
+        type: array
+        description: AWS account IDs to retrieve collecting sources for.
+        items:
+          type: string
+  steps:
+  - stepId: createDataLake
+    description: >-
+      Create the data lake in the target region with the supplied encryption,
+      lifecycle, and metadata store manager configuration.
+    operationId: CreateDataLake
+    requestBody:
+      contentType: application/json
+      payload:
+        configurations:
+        - region: $inputs.region
+          encryptionConfiguration:
+            kmsKeyId: $inputs.kmsKeyId
+          lifecycleConfiguration:
+            expiration:
+              days: $inputs.expirationDays
+        metaStoreManagerRoleArn: $inputs.metaStoreManagerRoleArn
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      dataLakeArn: $response.body#/dataLakes/0/dataLakeArn
+      status: $response.body#/dataLakes/0/status
+  - stepId: listDataLakes
+    description: >-
+      List the data lakes in the account and region to confirm the newly
+      created lake is registered and to capture its current status.
+    operationId: ListDataLakes
+    parameters:
+    - name: regions
+      in: query
+      value: $inputs.region
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      dataLakeArn: $response.body#/dataLakes/0/dataLakeArn
+      status: $response.body#/dataLakes/0/status
+    onSuccess:
+    - name: lakeReady
+      type: goto
+      stepId: getSources
+      criteria:
+      - context: $response.body
+        condition: $.dataLakes[0].status == "COMPLETED"
+        type: jsonpath
+    - name: lakeInitializing
+      type: goto
+      stepId: getSources
+      criteria:
+      - context: $response.body
+        condition: $.dataLakes[0].status == "INITIALIZED"
+        type: jsonpath
+  - stepId: getSources
+    description: >-
+      Retrieve a snapshot of which sources the data lake is collecting security
+      data from for the supplied accounts.
+    operationId: GetDataLakeSources
+    requestBody:
+      contentType: application/json
+      payload:
+        accounts: $inputs.accounts
+        maxResults: 25
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      dataLakeSources: $response.body#/dataLakeSources
+      nextToken: $response.body#/nextToken
+  outputs:
+    dataLakeArn: $steps.listDataLakes.outputs.dataLakeArn
+    status: $steps.listDataLakes.outputs.status
+    dataLakeSources: $steps.getSources.outputs.dataLakeSources

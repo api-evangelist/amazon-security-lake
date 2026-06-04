@@ -1,0 +1,97 @@
+arazzo: 1.0.1
+info:
+  title: Amazon Security Lake Decommission Data Lake
+  summary: Resolve a data lake, update its configuration, then delete its configuration object.
+  description: >-
+    Retires an Amazon Security Lake data lake in a controlled sequence. The
+    workflow lists the account's data lakes to resolve the target lake's ARN,
+    branches on whether a data lake exists, applies a final configuration update
+    (for example tightening the lifecycle before teardown), and then deletes the
+    data lake configuration object. Every step spells out its request inline so
+    the flow can be read and executed without opening the underlying OpenAPI
+    description.
+  version: 1.0.0
+sourceDescriptions:
+- name: securityLakeApi
+  url: ../openapi/amazon-security-lake-openapi.yml
+  type: openapi
+workflows:
+- workflowId: decommission-data-lake
+  summary: Resolve a data lake by region, update its configuration, and delete it.
+  description: >-
+    Lists data lakes to resolve the target ARN, branches on existence, applies a
+    final configuration update, and deletes the data lake configuration object.
+  inputs:
+    type: object
+    required:
+    - region
+    properties:
+      region:
+        type: string
+        description: The AWS region whose data lake should be decommissioned.
+      configurations:
+        type: array
+        description: The final configuration update to apply before deletion.
+        items:
+          type: object
+  steps:
+  - stepId: listDataLakes
+    description: >-
+      List the account's data lakes for the target region and capture the data
+      lake ARN to act on.
+    operationId: ListDataLakes
+    parameters:
+    - name: regions
+      in: query
+      value: $inputs.region
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      dataLakeArn: $response.body#/dataLakes/0/dataLakeArn
+    onSuccess:
+    - name: lakeFound
+      type: goto
+      stepId: updateDataLake
+      criteria:
+      - context: $response.body
+        condition: $.dataLakes.length > 0
+        type: jsonpath
+    - name: noLake
+      type: end
+      criteria:
+      - context: $response.body
+        condition: $.dataLakes.length == 0
+        type: jsonpath
+  - stepId: updateDataLake
+    description: >-
+      Apply a final configuration update to the resolved data lake before it is
+      torn down.
+    operationId: UpdateDataLake
+    parameters:
+    - name: dataLakeArn
+      in: path
+      value: $steps.listDataLakes.outputs.dataLakeArn
+    requestBody:
+      contentType: application/json
+      payload:
+        configurations: $inputs.configurations
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      dataLakeArn: $response.body#/dataLakeArn
+      status: $response.body#/status
+  - stepId: deleteDataLake
+    description: >-
+      Delete the Amazon Security Lake data lake configuration object for the
+      resolved ARN.
+    operationId: DeleteDataLake
+    parameters:
+    - name: dataLakeArn
+      in: path
+      value: $steps.updateDataLake.outputs.dataLakeArn
+    successCriteria:
+    - condition: $statusCode == 204
+    outputs:
+      deletedDataLakeArn: $steps.updateDataLake.outputs.dataLakeArn
+  outputs:
+    deletedDataLakeArn: $steps.deleteDataLake.outputs.deletedDataLakeArn

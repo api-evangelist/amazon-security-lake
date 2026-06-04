@@ -1,0 +1,113 @@
+arazzo: 1.0.1
+info:
+  title: Amazon Security Lake Onboard AWS Log Source
+  summary: Add a natively supported AWS service as a log source and confirm it is collecting.
+  description: >-
+    Onboards a natively supported AWS service (such as CloudTrail management
+    events or VPC flow logs) into Amazon Security Lake and verifies it is in
+    place. The workflow adds the AWS log source for the requested accounts and
+    regions, checks that no entries failed, lists the log sources in the region
+    to confirm the source is registered, and reads back the data lake source
+    snapshot to confirm the lake is collecting from it. Every step spells out
+    its request inline so the flow can be read and executed without opening the
+    underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: securityLakeApi
+  url: ../openapi/amazon-security-lake-openapi.yml
+  type: openapi
+workflows:
+- workflowId: onboard-aws-log-source
+  summary: Enable an AWS-native log source and verify it is registered and collecting.
+  description: >-
+    Adds a natively supported AWS log source for the given accounts and regions,
+    branches on whether any entries failed, lists the region's log sources to
+    confirm registration, and reads the data lake source snapshot.
+  inputs:
+    type: object
+    required:
+    - accounts
+    - regions
+    - sourceName
+    properties:
+      accounts:
+        type: array
+        description: AWS account IDs to enable the log source for.
+        items:
+          type: string
+      regions:
+        type: array
+        description: AWS regions to enable the log source in.
+        items:
+          type: string
+      sourceName:
+        type: string
+        description: The native AWS source name (e.g. CLOUD_TRAIL_MGMT, VPC_FLOW).
+      sourceVersion:
+        type: string
+        description: The version of the AWS log source to enable.
+  steps:
+  - stepId: createAwsLogSource
+    description: >-
+      Add the natively supported AWS service as a Security Lake log source for
+      the requested accounts and regions.
+    operationId: CreateAwsLogSource
+    requestBody:
+      contentType: application/json
+      payload:
+        sources:
+        - accounts: $inputs.accounts
+          regions: $inputs.regions
+          sourceName: $inputs.sourceName
+          sourceVersion: $inputs.sourceVersion
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      failed: $response.body#/failed
+    onSuccess:
+    - name: noFailures
+      type: goto
+      stepId: listLogSources
+      criteria:
+      - context: $response.body
+        condition: $.failed.length == 0
+        type: jsonpath
+    - name: someFailed
+      type: goto
+      stepId: listLogSources
+      criteria:
+      - context: $response.body
+        condition: $.failed.length > 0
+        type: jsonpath
+  - stepId: listLogSources
+    description: >-
+      List the log sources in the current region to confirm the AWS source has
+      been registered.
+    operationId: ListLogSources
+    parameters:
+    - name: maxResults
+      in: query
+      value: 50
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      sources: $response.body#/sources
+      nextToken: $response.body#/nextToken
+  - stepId: getDataLakeSources
+    description: >-
+      Read the data lake source snapshot for the supplied accounts to confirm
+      the lake is collecting data from the newly added AWS source.
+    operationId: GetDataLakeSources
+    requestBody:
+      contentType: application/json
+      payload:
+        accounts: $inputs.accounts
+        maxResults: 25
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      dataLakeSources: $response.body#/dataLakeSources
+  outputs:
+    failed: $steps.createAwsLogSource.outputs.failed
+    sources: $steps.listLogSources.outputs.sources
+    dataLakeSources: $steps.getDataLakeSources.outputs.dataLakeSources

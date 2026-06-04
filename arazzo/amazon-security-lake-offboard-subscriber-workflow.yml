@@ -1,0 +1,88 @@
+arazzo: 1.0.1
+info:
+  title: Amazon Security Lake Offboard Subscriber
+  summary: Confirm a subscriber exists, then delete it and verify it is removed from the list.
+  description: >-
+    Offboards a data subscriber from Amazon Security Lake in a verified
+    sequence. The workflow reads the subscriber by ID to confirm it exists,
+    branches on whether the subscriber is active or already deactivated, deletes
+    the subscriber, and then lists subscribers to confirm it has been removed.
+    Every step spells out its request inline so the flow can be read and
+    executed without opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: securityLakeApi
+  url: ../openapi/amazon-security-lake-openapi.yml
+  type: openapi
+workflows:
+- workflowId: offboard-subscriber
+  summary: Confirm a subscriber, delete it, and verify removal from the account list.
+  description: >-
+    Reads a subscriber by ID, branches on its status, deletes it, and lists
+    subscribers to confirm removal.
+  inputs:
+    type: object
+    required:
+    - subscriberId
+    properties:
+      subscriberId:
+        type: string
+        description: The ID of the subscriber to offboard.
+  steps:
+  - stepId: getSubscriber
+    description: >-
+      Read the subscriber by ID to confirm it exists and capture its current
+      status before deletion.
+    operationId: GetSubscriber
+    parameters:
+    - name: subscriberId
+      in: path
+      value: $inputs.subscriberId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      subscriberId: $response.body#/subscriberId
+      subscriberStatus: $response.body#/subscriberStatus
+    onSuccess:
+    - name: subscriberActive
+      type: goto
+      stepId: deleteSubscriber
+      criteria:
+      - context: $response.body
+        condition: $.subscriberStatus == "ACTIVE"
+        type: jsonpath
+    - name: subscriberDeactivated
+      type: goto
+      stepId: deleteSubscriber
+      criteria:
+      - context: $response.body
+        condition: $.subscriberStatus == "DEACTIVATED"
+        type: jsonpath
+  - stepId: deleteSubscriber
+    description: >-
+      Delete the confirmed subscriber and remove it from Amazon Security Lake.
+    operationId: DeleteSubscriber
+    parameters:
+    - name: subscriberId
+      in: path
+      value: $steps.getSubscriber.outputs.subscriberId
+    successCriteria:
+    - condition: $statusCode == 204
+    outputs:
+      deletedSubscriberId: $steps.getSubscriber.outputs.subscriberId
+  - stepId: listSubscribers
+    description: >-
+      List the remaining subscribers for the account to confirm the subscriber
+      has been removed.
+    operationId: ListSubscribers
+    parameters:
+    - name: maxResults
+      in: query
+      value: 50
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      subscribers: $response.body#/subscribers
+  outputs:
+    deletedSubscriberId: $steps.deleteSubscriber.outputs.deletedSubscriberId
+    subscribers: $steps.listSubscribers.outputs.subscribers

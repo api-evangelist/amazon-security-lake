@@ -1,0 +1,98 @@
+arazzo: 1.0.1
+info:
+  title: Amazon Security Lake Rename Subscriber
+  summary: Find a subscriber by name, confirm it, and update its name and description.
+  description: >-
+    Locates an existing Amazon Security Lake subscriber and updates its display
+    metadata. The workflow lists subscribers for the account, branches on
+    whether any subscribers exist, reads the first subscriber back by ID to
+    confirm it, and then updates the subscriber's name and description. Every
+    step spells out its request inline so the flow can be read and executed
+    without opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: securityLakeApi
+  url: ../openapi/amazon-security-lake-openapi.yml
+  type: openapi
+workflows:
+- workflowId: rename-subscriber
+  summary: Resolve a subscriber from the account list and update its name and description.
+  description: >-
+    Lists subscribers, branches on whether any exist, reads the first one back,
+    and patches its name and description.
+  inputs:
+    type: object
+    required:
+    - newSubscriberName
+    properties:
+      newSubscriberName:
+        type: string
+        description: The new name to apply to the subscriber.
+      newSubscriberDescription:
+        type: string
+        description: The new description to apply to the subscriber.
+  steps:
+  - stepId: listSubscribers
+    description: >-
+      List the subscribers for the account and capture the first subscriber's
+      ID to update.
+    operationId: ListSubscribers
+    parameters:
+    - name: maxResults
+      in: query
+      value: 1
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      subscriberId: $response.body#/subscribers/0/subscriberId
+    onSuccess:
+    - name: subscriberFound
+      type: goto
+      stepId: getSubscriber
+      criteria:
+      - context: $response.body
+        condition: $.subscribers.length > 0
+        type: jsonpath
+    - name: noSubscribers
+      type: end
+      criteria:
+      - context: $response.body
+        condition: $.subscribers.length == 0
+        type: jsonpath
+  - stepId: getSubscriber
+    description: >-
+      Read the resolved subscriber back by ID to confirm it exists before
+      updating its metadata.
+    operationId: GetSubscriber
+    parameters:
+    - name: subscriberId
+      in: path
+      value: $steps.listSubscribers.outputs.subscriberId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      subscriberId: $response.body#/subscriberId
+      subscriberStatus: $response.body#/subscriberStatus
+  - stepId: updateSubscriber
+    description: >-
+      Apply the new name and description to the subscriber.
+    operationId: UpdateSubscriber
+    parameters:
+    - name: subscriberId
+      in: path
+      value: $steps.getSubscriber.outputs.subscriberId
+    requestBody:
+      contentType: application/json
+      payload:
+        subscriberName: $inputs.newSubscriberName
+        subscriberDescription: $inputs.newSubscriberDescription
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      subscriberId: $response.body#/subscriberId
+      subscriberName: $response.body#/subscriberName
+      subscriberStatus: $response.body#/subscriberStatus
+  outputs:
+    subscriberId: $steps.updateSubscriber.outputs.subscriberId
+    subscriberName: $steps.updateSubscriber.outputs.subscriberName
+    subscriberStatus: $steps.updateSubscriber.outputs.subscriberStatus
