@@ -1,0 +1,289 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Amazon Security Lake API",
+    "version": "Wed May 09 2018 20:00:00 GMT-0400 (Eastern Daylight Time)"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Data Lakes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Amazon Security Lake List Data Lakes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://securitylake.{region}.amazonaws.com/v1/datalake",
+            "params": [
+              {
+                "name": "regions",
+                "value": "",
+                "type": "query",
+                "description": "List of regions to include in the response."
+              }
+            ]
+          },
+          "docs": "Lists information about the data lakes in the current AWS account and Region."
+        },
+        {
+          "info": {
+            "name": "Amazon Security Lake Create Data Lake",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://securitylake.{region}.amazonaws.com/v1/datalake",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a Security Lake data lake in the specified regions. Security Lake begins ingesting security data after you create the data lake."
+        },
+        {
+          "info": {
+            "name": "Amazon Security Lake Update Data Lake",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://securitylake.{region}.amazonaws.com/v1/datalake/:dataLakeArn",
+            "params": [
+              {
+                "name": "dataLakeArn",
+                "value": "",
+                "type": "path",
+                "description": "The ARN of the data lake to update."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the configuration of a data lake."
+        },
+        {
+          "info": {
+            "name": "Amazon Security Lake Delete Data Lake",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://securitylake.{region}.amazonaws.com/v1/datalake/:dataLakeArn",
+            "params": [
+              {
+                "name": "dataLakeArn",
+                "value": "",
+                "type": "path",
+                "description": "The ARN of the data lake to delete."
+              }
+            ]
+          },
+          "docs": "Deletes the Amazon Security Lake data lake configuration object for the specified account and Region."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Log Sources",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Amazon Security Lake Get Data Lake Sources",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://securitylake.{region}.amazonaws.com/v1/datalake/sources",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Retrieves a snapshot of the current Region, including whether Amazon Security Lake is enabled for those accounts and which sources Security Lake is collecting data from."
+        },
+        {
+          "info": {
+            "name": "Amazon Security Lake Create AWS Log Source",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://securitylake.{region}.amazonaws.com/v1/logsources/aws",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Adds a natively supported Amazon Web Service as an Amazon Security Lake source."
+        },
+        {
+          "info": {
+            "name": "Amazon Security Lake Create Custom Log Source",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://securitylake.{region}.amazonaws.com/v1/logsources/custom",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Adds a third-party custom source in Amazon Security Lake to store log data."
+        },
+        {
+          "info": {
+            "name": "Amazon Security Lake List Log Sources",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://securitylake.{region}.amazonaws.com/v1/logsources",
+            "params": [
+              {
+                "name": "maxResults",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of results to return."
+              },
+              {
+                "name": "nextToken",
+                "value": "",
+                "type": "query",
+                "description": "Pagination token."
+              }
+            ]
+          },
+          "docs": "Retrieves the log sources in the current Amazon Web Services Region."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Subscribers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Amazon Security Lake List Subscribers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://securitylake.{region}.amazonaws.com/v1/subscribers",
+            "params": [
+              {
+                "name": "maxResults",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of results to return."
+              },
+              {
+                "name": "nextToken",
+                "value": "",
+                "type": "query",
+                "description": "Pagination token."
+              }
+            ]
+          },
+          "docs": "Lists all subscribers for the specific Amazon Security Lake account ID."
+        },
+        {
+          "info": {
+            "name": "Amazon Security Lake Create Subscriber",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://securitylake.{region}.amazonaws.com/v1/subscribers",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a subscriber for accounts that are already enabled in Amazon Security Lake."
+        },
+        {
+          "info": {
+            "name": "Amazon Security Lake Get Subscriber",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://securitylake.{region}.amazonaws.com/v1/subscribers/:subscriberId",
+            "params": [
+              {
+                "name": "subscriberId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the subscriber to retrieve."
+              }
+            ]
+          },
+          "docs": "Gets information about a specific subscriber created in the current Amazon Web Services Region."
+        },
+        {
+          "info": {
+            "name": "Amazon Security Lake Update Subscriber",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://securitylake.{region}.amazonaws.com/v1/subscribers/:subscriberId",
+            "params": [
+              {
+                "name": "subscriberId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the subscriber to update."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing subscriber for the specific Amazon Security Lake account ID and Region."
+        },
+        {
+          "info": {
+            "name": "Amazon Security Lake Delete Subscriber",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://securitylake.{region}.amazonaws.com/v1/subscribers/:subscriberId",
+            "params": [
+              {
+                "name": "subscriberId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the subscriber to delete."
+              }
+            ]
+          },
+          "docs": "Deletes the specified subscriber and removes them from Amazon Security Lake."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
