@@ -42,30 +42,27 @@ apis:
 common:
   - type: PostmanWorkspace
     url: https://www.postman.com/kinlaneapi/amazon-security-lake/overview
-  - type: ArazzoWorkflows
-    url: arazzo/
-    workflows:
-      - url: arazzo/amazon-security-lake-decommission-data-lake-workflow.yml
-        name: Amazon Security Lake Decommission Data Lake
-        summary: Resolve a data lake, update its configuration, then delete its configuration object.
-      - url: arazzo/amazon-security-lake-offboard-subscriber-workflow.yml
-        name: Amazon Security Lake Offboard Subscriber
-        summary: Confirm a subscriber exists, then delete it and verify it is removed from the list.
-      - url: arazzo/amazon-security-lake-onboard-aws-log-source-workflow.yml
-        name: Amazon Security Lake Onboard AWS Log Source
-        summary: Add a natively supported AWS service as a log source and confirm it is collecting.
-      - url: arazzo/amazon-security-lake-provision-data-lake-workflow.yml
-        name: Amazon Security Lake Provision Data Lake
-        summary: Create a Security Lake data lake, confirm it is listed, and inspect its collecting sources.
-      - url: arazzo/amazon-security-lake-provision-subscriber-workflow.yml
-        name: Amazon Security Lake Provision Subscriber
-        summary: Create a subscriber, confirm its identity and status, and verify it is listed.
-      - url: arazzo/amazon-security-lake-register-custom-source-workflow.yml
-        name: Amazon Security Lake Register Custom Source
-        summary: Register a third-party custom log source and confirm it appears in the source list.
-      - url: arazzo/amazon-security-lake-rename-subscriber-workflow.yml
-        name: Amazon Security Lake Rename Subscriber
-        summary: Find a subscriber by name, confirm it, and update its name and description.
+  - type: Arazzo
+    url: arazzo/amazon-security-lake-decommission-data-lake-workflow.yml
+    name: Amazon Security Lake Decommission Data Lake
+  - type: Arazzo
+    url: arazzo/amazon-security-lake-offboard-subscriber-workflow.yml
+    name: Amazon Security Lake Offboard Subscriber
+  - type: Arazzo
+    url: arazzo/amazon-security-lake-onboard-aws-log-source-workflow.yml
+    name: Amazon Security Lake Onboard AWS Log Source
+  - type: Arazzo
+    url: arazzo/amazon-security-lake-provision-data-lake-workflow.yml
+    name: Amazon Security Lake Provision Data Lake
+  - type: Arazzo
+    url: arazzo/amazon-security-lake-provision-subscriber-workflow.yml
+    name: Amazon Security Lake Provision Subscriber
+  - type: Arazzo
+    url: arazzo/amazon-security-lake-register-custom-source-workflow.yml
+    name: Amazon Security Lake Register Custom Source
+  - type: Arazzo
+    url: arazzo/amazon-security-lake-rename-subscriber-workflow.yml
+    name: Amazon Security Lake Rename Subscriber
   - type: Portal
     url: https://aws.amazon.com/security-lake/
   - type: GettingStarted
@@ -76,7 +73,7 @@ common:
     url: https://docs.aws.amazon.com/security-lake/latest/APIReference/
   - type: Console
     url: https://console.aws.amazon.com/securitylake/
-  - type: SignUp
+  - type: Signup
     url: https://portal.aws.amazon.com/billing/signup
   - type: Pricing
     url: https://aws.amazon.com/security-lake/pricing/
@@ -174,11 +171,11 @@ common:
     url: json-structure/amazon-security-lake-log-source-structure.json
   - type: JSONStructure
     url: json-structure/amazon-security-lake-subscriber-structure.json
-  - type: Example
+  - type: Examples
     url: examples/amazon-security-lake-data-lake-example.json
-  - type: Example
+  - type: Examples
     url: examples/amazon-security-lake-log-source-example.json
-  - type: Example
+  - type: Examples
     url: examples/amazon-security-lake-subscriber-example.json
   - type: Integrations
     url: https://aws.amazon.com/partners/
