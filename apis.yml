@@ -40,6 +40,14 @@ apis:
       - type: JSONSchema
         url: json-schema/amazon-security-lake-subscriber-schema.json
 common:
+  - type: TrustCenter
+    url: security/amazon-security-lake-trust-center.yml
+  - type: VulnerabilityDisclosure
+    url: security/amazon-security-lake-vulnerability-disclosure.yml
+  - type: DomainSecurity
+    url: security/amazon-security-lake-domain-security.yml
+  - type: Authentication
+    url: authentication/amazon-security-lake-authentication.yml
   - type: PostmanWorkspace
     url: https://www.postman.com/kinlaneapi/amazon-security-lake/overview
   - type: Arazzo
