@@ -1,0 +1,248 @@
+openapi: 3.1.0
+info:
+  title: Amazon Security Lake Data Lakes API
+  description: Amazon Security Lake is a service that automatically centralizes an organization's security data from cloud, on-premises, and custom sources into a purpose-built data lake stored in your own Amazon S3. It manages the data lifecycle and supports OCSF (Open Cybersecurity Schema Framework) for normalized security data analysis.
+  version: 2018-05-10
+  contact:
+    name: Amazon Web Services
+    url: https://aws.amazon.com/security-lake/
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+  x-generated-from: documentation
+servers:
+- url: https://securitylake.{region}.amazonaws.com
+  variables:
+    region:
+      default: us-east-1
+      description: The AWS region.
+security:
+- AWSSignatureV4: []
+tags:
+- name: Data Lakes
+  description: Data lake creation and management
+paths:
+  /v1/datalake:
+    post:
+      operationId: CreateDataLake
+      summary: Amazon Security Lake Create Data Lake
+      description: Creates a Security Lake data lake in the specified regions. Security Lake begins ingesting security data after you create the data lake.
+      tags:
+      - Data Lakes
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateDataLakeRequest'
+      responses:
+        '200':
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateDataLakeResponse'
+              examples:
+                CreateDataLake200Example:
+                  summary: Default CreateDataLake 200 response
+                  x-microcks-default: true
+                  value:
+                    dataLakes:
+                    - dataLakeArn: arn:aws:securitylake:us-east-1:123456789012:data-lake/default
+                      region: us-east-1
+                      status: INITIALIZED
+        '400':
+          description: Bad request.
+        '500':
+          description: Internal server error.
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    get:
+      operationId: ListDataLakes
+      summary: Amazon Security Lake List Data Lakes
+      description: Lists information about the data lakes in the current AWS account and Region.
+      tags:
+      - Data Lakes
+      parameters:
+      - name: regions
+        in: query
+        description: List of regions to include in the response.
+        schema:
+          type: array
+          items:
+            type: string
+      responses:
+        '200':
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListDataLakesResponse'
+              examples:
+                ListDataLakes200Example:
+                  summary: Default ListDataLakes 200 response
+                  x-microcks-default: true
+                  value:
+                    dataLakes:
+                    - dataLakeArn: arn:aws:securitylake:us-east-1:123456789012:data-lake/default
+                      region: us-east-1
+                      status: INITIALIZED
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /v1/datalake/{dataLakeArn}:
+    put:
+      operationId: UpdateDataLake
+      summary: Amazon Security Lake Update Data Lake
+      description: Updates the configuration of a data lake.
+      tags:
+      - Data Lakes
+      parameters:
+      - name: dataLakeArn
+        in: path
+        required: true
+        description: The ARN of the data lake to update.
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateDataLakeRequest'
+      responses:
+        '200':
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DataLake'
+              examples:
+                UpdateDataLake200Example:
+                  summary: Default UpdateDataLake 200 response
+                  x-microcks-default: true
+                  value:
+                    dataLakeArn: arn:aws:securitylake:us-east-1:123456789012:data-lake/default
+                    region: us-east-1
+                    status: INITIALIZED
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    delete:
+      operationId: DeleteDataLake
+      summary: Amazon Security Lake Delete Data Lake
+      description: Deletes the Amazon Security Lake data lake configuration object for the specified account and Region.
+      tags:
+      - Data Lakes
+      parameters:
+      - name: dataLakeArn
+        in: path
+        required: true
+        description: The ARN of the data lake to delete.
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Successfully deleted.
+        '400':
+          description: Bad request.
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  schemas:
+    UpdateDataLakeRequest:
+      type: object
+      properties:
+        configurations:
+          type: array
+          items:
+            type: object
+    DataLake:
+      type: object
+      description: Represents an Amazon Security Lake data lake configuration.
+      properties:
+        dataLakeArn:
+          type: string
+          description: The ARN of the data lake.
+          example: arn:aws:securitylake:us-east-1:123456789012:data-lake/default
+        region:
+          type: string
+          description: The AWS region where the data lake is configured.
+          example: us-east-1
+        status:
+          type: string
+          description: The current status of the data lake.
+          enum:
+          - INITIALIZED
+          - PENDING
+          - COMPLETED
+          - FAILED
+          example: INITIALIZED
+        encryptionConfiguration:
+          type: object
+          description: The encryption configuration for the data lake.
+          properties:
+            kmsKeyId:
+              type: string
+              description: The KMS key ID for encryption.
+        lifecycleConfiguration:
+          type: object
+          description: The lifecycle configuration for the data lake.
+          properties:
+            expiration:
+              type: object
+              properties:
+                days:
+                  type: integer
+            transitions:
+              type: array
+              items:
+                type: object
+        s3BucketArn:
+          type: string
+          description: The ARN of the S3 bucket where security data is stored.
+          example: arn:aws:s3:::aws-security-data-lake-us-east-1-abc123
+    ListDataLakesResponse:
+      type: object
+      properties:
+        dataLakes:
+          type: array
+          items:
+            $ref: '#/components/schemas/DataLake'
+    CreateDataLakeResponse:
+      type: object
+      properties:
+        dataLakes:
+          type: array
+          items:
+            $ref: '#/components/schemas/DataLake'
+    CreateDataLakeRequest:
+      type: object
+      required:
+      - configurations
+      properties:
+        configurations:
+          type: array
+          description: Specifies the configurations to add to the data lake.
+          items:
+            type: object
+            properties:
+              encryptionConfiguration:
+                type: object
+              lifecycleConfiguration:
+                type: object
+              region:
+                type: string
+              replicationConfiguration:
+                type: object
+        metaStoreManagerRoleArn:
+          type: string
+          description: The ARN of the IAM role for the metadata store manager.
+  securitySchemes:
+    AWSSignatureV4:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: AWS Signature Version 4 authentication

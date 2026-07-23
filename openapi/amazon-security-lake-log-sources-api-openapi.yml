@@ -1,0 +1,240 @@
+openapi: 3.1.0
+info:
+  title: Amazon Security Lake Data Lakes Log Sources API
+  description: Amazon Security Lake is a service that automatically centralizes an organization's security data from cloud, on-premises, and custom sources into a purpose-built data lake stored in your own Amazon S3. It manages the data lifecycle and supports OCSF (Open Cybersecurity Schema Framework) for normalized security data analysis.
+  version: 2018-05-10
+  contact:
+    name: Amazon Web Services
+    url: https://aws.amazon.com/security-lake/
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+  x-generated-from: documentation
+servers:
+- url: https://securitylake.{region}.amazonaws.com
+  variables:
+    region:
+      default: us-east-1
+      description: The AWS region.
+security:
+- AWSSignatureV4: []
+tags:
+- name: Log Sources
+  description: AWS and custom log source management
+paths:
+  /v1/datalake/sources:
+    post:
+      operationId: GetDataLakeSources
+      summary: Amazon Security Lake Get Data Lake Sources
+      description: Retrieves a snapshot of the current Region, including whether Amazon Security Lake is enabled for those accounts and which sources Security Lake is collecting data from.
+      tags:
+      - Log Sources
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                accounts:
+                  type: array
+                  items:
+                    type: string
+                  description: AWS account IDs to retrieve sources for.
+                maxResults:
+                  type: integer
+                  description: Maximum number of results to return.
+                nextToken:
+                  type: string
+                  description: Pagination token.
+      responses:
+        '200':
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  dataLakeSources:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/LogSource'
+                  nextToken:
+                    type: string
+              examples:
+                GetDataLakeSources200Example:
+                  summary: Default GetDataLakeSources 200 response
+                  x-microcks-default: true
+                  value:
+                    dataLakeSources: []
+                    nextToken: null
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /v1/logsources/aws:
+    post:
+      operationId: CreateAwsLogSource
+      summary: Amazon Security Lake Create AWS Log Source
+      description: Adds a natively supported Amazon Web Service as an Amazon Security Lake source.
+      tags:
+      - Log Sources
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - sources
+              properties:
+                sources:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      accounts:
+                        type: array
+                        items:
+                          type: string
+                      regions:
+                        type: array
+                        items:
+                          type: string
+                      sourceName:
+                        type: string
+                      sourceVersion:
+                        type: string
+      responses:
+        '200':
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: array
+                    items:
+                      type: object
+              examples:
+                CreateAwsLogSource200Example:
+                  summary: Default CreateAwsLogSource 200 response
+                  x-microcks-default: true
+                  value:
+                    failed: []
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /v1/logsources/custom:
+    post:
+      operationId: CreateCustomLogSource
+      summary: Amazon Security Lake Create Custom Log Source
+      description: Adds a third-party custom source in Amazon Security Lake to store log data.
+      tags:
+      - Log Sources
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - configuration
+              - sourceName
+              properties:
+                configuration:
+                  type: object
+                  description: Configuration for the custom log source.
+                sourceName:
+                  type: string
+                  description: The name of the custom log source.
+                sourceVersion:
+                  type: string
+                  description: The version of the custom log source.
+      responses:
+        '200':
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LogSource'
+              examples:
+                CreateCustomLogSource200Example:
+                  summary: Default CreateCustomLogSource 200 response
+                  x-microcks-default: true
+                  value:
+                    sourceName: my-custom-source
+                    sourceVersion: '1.0'
+                    sourceStatus: ACTIVE
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /v1/logsources:
+    get:
+      operationId: ListLogSources
+      summary: Amazon Security Lake List Log Sources
+      description: Retrieves the log sources in the current Amazon Web Services Region.
+      tags:
+      - Log Sources
+      parameters:
+      - name: maxResults
+        in: query
+        description: Maximum number of results to return.
+        schema:
+          type: integer
+      - name: nextToken
+        in: query
+        description: Pagination token.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  sources:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/LogSource'
+                  nextToken:
+                    type: string
+              examples:
+                ListLogSources200Example:
+                  summary: Default ListLogSources 200 response
+                  x-microcks-default: true
+                  value:
+                    sources: []
+                    nextToken: null
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  schemas:
+    LogSource:
+      type: object
+      description: Represents a log source configured in Amazon Security Lake.
+      properties:
+        sourceName:
+          type: string
+          description: The name of the log source.
+          example: CLOUD_TRAIL_MGMT
+        sourceVersion:
+          type: string
+          description: The version of the log source.
+          example: '2.0'
+        sourceStatus:
+          type: string
+          description: The status of the log source.
+          enum:
+          - ACTIVE
+          - DEACTIVATED
+          - PENDING
+          example: ACTIVE
+  securitySchemes:
+    AWSSignatureV4:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: AWS Signature Version 4 authentication
