@@ -1,3 +1,17 @@
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Freemium · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/amazon-security-lake.png
 name: Amazon Security Lake
 description: >-
   Amazon Security Lake is a service that automatically centralizes an organization's security data from cloud,
@@ -16,29 +30,60 @@ tags:
   - SIEM
   - Threat Detection
 apis:
-  - name: Amazon Security Lake API
-    description: >-
-      The Amazon Security Lake API provides programmatic access to create and manage data lakes, data sources,
-      subscribers, and log sources for centralizing and analyzing security data across your organization using the OCSF
-      (Open Cybersecurity Schema Framework).
-    humanURL: https://docs.aws.amazon.com/security-lake/latest/APIReference/Welcome.html
-    baseURL: https://securitylake.{region}.amazonaws.com
-    tags:
-      - Data Lake
-      - Security
-      - Threat Detection
-      - OCSF
-    properties:
-      - type: Documentation
-        url: https://docs.aws.amazon.com/security-lake/latest/APIReference/Welcome.html
-      - type: OpenAPI
-        url: openapi/amazon-security-lake-openapi.yml
-      - type: JSONSchema
-        url: json-schema/amazon-security-lake-data-lake-schema.json
-      - type: JSONSchema
-        url: json-schema/amazon-security-lake-log-source-schema.json
-      - type: JSONSchema
-        url: json-schema/amazon-security-lake-subscriber-schema.json
+- aid: amazon-security-lake:amazon-security-lake-data-lakes-api
+  name: Amazon Security Lake Data Lakes API
+  description: Data lake creation and management
+  humanURL: https://docs.aws.amazon.com/security-lake/latest/APIReference/Welcome.html
+  baseURL: https://securitylake.{region}.amazonaws.com
+  tags:
+  - Data Lakes
+  properties:
+  - type: OpenAPI
+    url: openapi/amazon-security-lake-data-lakes-api-openapi.yml
+  - type: Documentation
+    url: https://docs.aws.amazon.com/security-lake/latest/APIReference/Welcome.html
+  - type: JSONSchema
+    url: json-schema/amazon-security-lake-data-lake-schema.json
+  - type: JSONSchema
+    url: json-schema/amazon-security-lake-log-source-schema.json
+  - type: JSONSchema
+    url: json-schema/amazon-security-lake-subscriber-schema.json
+- aid: amazon-security-lake:amazon-security-lake-log-sources-api
+  name: Amazon Security Lake Log Sources API
+  description: AWS and custom log source management
+  humanURL: https://docs.aws.amazon.com/security-lake/latest/APIReference/Welcome.html
+  baseURL: https://securitylake.{region}.amazonaws.com
+  tags:
+  - Log Sources
+  properties:
+  - type: OpenAPI
+    url: openapi/amazon-security-lake-log-sources-api-openapi.yml
+  - type: Documentation
+    url: https://docs.aws.amazon.com/security-lake/latest/APIReference/Welcome.html
+  - type: JSONSchema
+    url: json-schema/amazon-security-lake-data-lake-schema.json
+  - type: JSONSchema
+    url: json-schema/amazon-security-lake-log-source-schema.json
+  - type: JSONSchema
+    url: json-schema/amazon-security-lake-subscriber-schema.json
+- aid: amazon-security-lake:amazon-security-lake-subscribers-api
+  name: Amazon Security Lake Subscribers API
+  description: Subscriber management for data access
+  humanURL: https://docs.aws.amazon.com/security-lake/latest/APIReference/Welcome.html
+  baseURL: https://securitylake.{region}.amazonaws.com
+  tags:
+  - Subscribers
+  properties:
+  - type: OpenAPI
+    url: openapi/amazon-security-lake-subscribers-api-openapi.yml
+  - type: Documentation
+    url: https://docs.aws.amazon.com/security-lake/latest/APIReference/Welcome.html
+  - type: JSONSchema
+    url: json-schema/amazon-security-lake-data-lake-schema.json
+  - type: JSONSchema
+    url: json-schema/amazon-security-lake-log-source-schema.json
+  - type: JSONSchema
+    url: json-schema/amazon-security-lake-subscriber-schema.json
 common:
   - type: AgenticAccess
     url: agentic-access/amazon-security-lake-agentic-access.yml
