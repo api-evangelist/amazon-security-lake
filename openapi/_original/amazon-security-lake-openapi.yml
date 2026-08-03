@@ -1,0 +1,760 @@
+openapi: 3.1.0
+info:
+  title: Amazon Security Lake API
+  description: >-
+    Amazon Security Lake is a service that automatically centralizes an organization's
+    security data from cloud, on-premises, and custom sources into a purpose-built data
+    lake stored in your own Amazon S3. It manages the data lifecycle and supports OCSF
+    (Open Cybersecurity Schema Framework) for normalized security data analysis.
+  version: 2018-05-10
+  contact:
+    name: Amazon Web Services
+    url: https://aws.amazon.com/security-lake/
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+  x-generated-from: documentation
+
+servers:
+  - url: https://securitylake.{region}.amazonaws.com
+    variables:
+      region:
+        default: us-east-1
+        description: The AWS region.
+
+tags:
+  - name: Data Lakes
+    description: Data lake creation and management
+  - name: Log Sources
+    description: AWS and custom log source management
+  - name: Subscribers
+    description: Subscriber management for data access
+  - name: Organization
+    description: Organization-level configuration
+
+paths:
+
+  /v1/datalake:
+    post:
+      operationId: CreateDataLake
+      summary: Amazon Security Lake Create Data Lake
+      description: >-
+        Creates a Security Lake data lake in the specified regions. Security Lake
+        begins ingesting security data after you create the data lake.
+      tags:
+        - Data Lakes
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateDataLakeRequest'
+      responses:
+        '200':
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateDataLakeResponse'
+              examples:
+                CreateDataLake200Example:
+                  summary: Default CreateDataLake 200 response
+                  x-microcks-default: true
+                  value:
+                    dataLakes:
+                      - dataLakeArn: "arn:aws:securitylake:us-east-1:123456789012:data-lake/default"
+                        region: "us-east-1"
+                        status: "INITIALIZED"
+        '400':
+          description: Bad request.
+        '500':
+          description: Internal server error.
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+
+    get:
+      operationId: ListDataLakes
+      summary: Amazon Security Lake List Data Lakes
+      description: >-
+        Lists information about the data lakes in the current AWS account and Region.
+      tags:
+        - Data Lakes
+      parameters:
+        - name: regions
+          in: query
+          description: List of regions to include in the response.
+          schema:
+            type: array
+            items:
+              type: string
+      responses:
+        '200':
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListDataLakesResponse'
+              examples:
+                ListDataLakes200Example:
+                  summary: Default ListDataLakes 200 response
+                  x-microcks-default: true
+                  value:
+                    dataLakes:
+                      - dataLakeArn: "arn:aws:securitylake:us-east-1:123456789012:data-lake/default"
+                        region: "us-east-1"
+                        status: "INITIALIZED"
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+
+  /v1/datalake/{dataLakeArn}:
+    put:
+      operationId: UpdateDataLake
+      summary: Amazon Security Lake Update Data Lake
+      description: >-
+        Updates the configuration of a data lake.
+      tags:
+        - Data Lakes
+      parameters:
+        - name: dataLakeArn
+          in: path
+          required: true
+          description: The ARN of the data lake to update.
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateDataLakeRequest'
+      responses:
+        '200':
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DataLake'
+              examples:
+                UpdateDataLake200Example:
+                  summary: Default UpdateDataLake 200 response
+                  x-microcks-default: true
+                  value:
+                    dataLakeArn: "arn:aws:securitylake:us-east-1:123456789012:data-lake/default"
+                    region: "us-east-1"
+                    status: "INITIALIZED"
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+
+    delete:
+      operationId: DeleteDataLake
+      summary: Amazon Security Lake Delete Data Lake
+      description: >-
+        Deletes the Amazon Security Lake data lake configuration object for the
+        specified account and Region.
+      tags:
+        - Data Lakes
+      parameters:
+        - name: dataLakeArn
+          in: path
+          required: true
+          description: The ARN of the data lake to delete.
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Successfully deleted.
+        '400':
+          description: Bad request.
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+
+  /v1/datalake/sources:
+    post:
+      operationId: GetDataLakeSources
+      summary: Amazon Security Lake Get Data Lake Sources
+      description: >-
+        Retrieves a snapshot of the current Region, including whether Amazon Security
+        Lake is enabled for those accounts and which sources Security Lake is collecting
+        data from.
+      tags:
+        - Log Sources
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                accounts:
+                  type: array
+                  items:
+                    type: string
+                  description: AWS account IDs to retrieve sources for.
+                maxResults:
+                  type: integer
+                  description: Maximum number of results to return.
+                nextToken:
+                  type: string
+                  description: Pagination token.
+      responses:
+        '200':
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  dataLakeSources:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/LogSource'
+                  nextToken:
+                    type: string
+              examples:
+                GetDataLakeSources200Example:
+                  summary: Default GetDataLakeSources 200 response
+                  x-microcks-default: true
+                  value:
+                    dataLakeSources: []
+                    nextToken: null
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+
+  /v1/logsources/aws:
+    post:
+      operationId: CreateAwsLogSource
+      summary: Amazon Security Lake Create AWS Log Source
+      description: >-
+        Adds a natively supported Amazon Web Service as an Amazon Security Lake source.
+      tags:
+        - Log Sources
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - sources
+              properties:
+                sources:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      accounts:
+                        type: array
+                        items:
+                          type: string
+                      regions:
+                        type: array
+                        items:
+                          type: string
+                      sourceName:
+                        type: string
+                      sourceVersion:
+                        type: string
+      responses:
+        '200':
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  failed:
+                    type: array
+                    items:
+                      type: object
+              examples:
+                CreateAwsLogSource200Example:
+                  summary: Default CreateAwsLogSource 200 response
+                  x-microcks-default: true
+                  value:
+                    failed: []
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+
+  /v1/logsources/custom:
+    post:
+      operationId: CreateCustomLogSource
+      summary: Amazon Security Lake Create Custom Log Source
+      description: >-
+        Adds a third-party custom source in Amazon Security Lake to store log data.
+      tags:
+        - Log Sources
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - configuration
+                - sourceName
+              properties:
+                configuration:
+                  type: object
+                  description: Configuration for the custom log source.
+                sourceName:
+                  type: string
+                  description: The name of the custom log source.
+                sourceVersion:
+                  type: string
+                  description: The version of the custom log source.
+      responses:
+        '200':
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LogSource'
+              examples:
+                CreateCustomLogSource200Example:
+                  summary: Default CreateCustomLogSource 200 response
+                  x-microcks-default: true
+                  value:
+                    sourceName: "my-custom-source"
+                    sourceVersion: "1.0"
+                    sourceStatus: "ACTIVE"
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+
+  /v1/logsources:
+    get:
+      operationId: ListLogSources
+      summary: Amazon Security Lake List Log Sources
+      description: >-
+        Retrieves the log sources in the current Amazon Web Services Region.
+      tags:
+        - Log Sources
+      parameters:
+        - name: maxResults
+          in: query
+          description: Maximum number of results to return.
+          schema:
+            type: integer
+        - name: nextToken
+          in: query
+          description: Pagination token.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  sources:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/LogSource'
+                  nextToken:
+                    type: string
+              examples:
+                ListLogSources200Example:
+                  summary: Default ListLogSources 200 response
+                  x-microcks-default: true
+                  value:
+                    sources: []
+                    nextToken: null
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+
+  /v1/subscribers:
+    post:
+      operationId: CreateSubscriber
+      summary: Amazon Security Lake Create Subscriber
+      description: >-
+        Creates a subscriber for accounts that are already enabled in Amazon Security Lake.
+      tags:
+        - Subscribers
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateSubscriberRequest'
+      responses:
+        '200':
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Subscriber'
+              examples:
+                CreateSubscriber200Example:
+                  summary: Default CreateSubscriber 200 response
+                  x-microcks-default: true
+                  value:
+                    subscriberId: "sub-a1b2c3d4"
+                    subscriberArn: "arn:aws:securitylake:us-east-1:123456789012:subscriber/sub-a1b2c3d4"
+                    subscriberName: "MySubscriber"
+                    subscriberStatus: "ACTIVE"
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+
+    get:
+      operationId: ListSubscribers
+      summary: Amazon Security Lake List Subscribers
+      description: >-
+        Lists all subscribers for the specific Amazon Security Lake account ID.
+      tags:
+        - Subscribers
+      parameters:
+        - name: maxResults
+          in: query
+          description: Maximum number of results to return.
+          schema:
+            type: integer
+        - name: nextToken
+          in: query
+          description: Pagination token.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  subscribers:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Subscriber'
+                  nextToken:
+                    type: string
+              examples:
+                ListSubscribers200Example:
+                  summary: Default ListSubscribers 200 response
+                  x-microcks-default: true
+                  value:
+                    subscribers: []
+                    nextToken: null
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+
+  /v1/subscribers/{subscriberId}:
+    get:
+      operationId: GetSubscriber
+      summary: Amazon Security Lake Get Subscriber
+      description: >-
+        Gets information about a specific subscriber created in the current Amazon Web Services Region.
+      tags:
+        - Subscribers
+      parameters:
+        - name: subscriberId
+          in: path
+          required: true
+          description: The ID of the subscriber to retrieve.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Subscriber'
+              examples:
+                GetSubscriber200Example:
+                  summary: Default GetSubscriber 200 response
+                  x-microcks-default: true
+                  value:
+                    subscriberId: "sub-a1b2c3d4"
+                    subscriberArn: "arn:aws:securitylake:us-east-1:123456789012:subscriber/sub-a1b2c3d4"
+                    subscriberName: "MySubscriber"
+                    subscriberStatus: "ACTIVE"
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+
+    put:
+      operationId: UpdateSubscriber
+      summary: Amazon Security Lake Update Subscriber
+      description: >-
+        Updates an existing subscriber for the specific Amazon Security Lake account ID and Region.
+      tags:
+        - Subscribers
+      parameters:
+        - name: subscriberId
+          in: path
+          required: true
+          description: The ID of the subscriber to update.
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                subscriberDescription:
+                  type: string
+                  description: Updated description for the subscriber.
+                subscriberName:
+                  type: string
+                  description: Updated name for the subscriber.
+      responses:
+        '200':
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Subscriber'
+              examples:
+                UpdateSubscriber200Example:
+                  summary: Default UpdateSubscriber 200 response
+                  x-microcks-default: true
+                  value:
+                    subscriberId: "sub-a1b2c3d4"
+                    subscriberName: "MyUpdatedSubscriber"
+                    subscriberStatus: "ACTIVE"
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+
+    delete:
+      operationId: DeleteSubscriber
+      summary: Amazon Security Lake Delete Subscriber
+      description: >-
+        Deletes the specified subscriber and removes them from Amazon Security Lake.
+      tags:
+        - Subscribers
+      parameters:
+        - name: subscriberId
+          in: path
+          required: true
+          description: The ID of the subscriber to delete.
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Successfully deleted.
+        '400':
+          description: Bad request.
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+
+components:
+  schemas:
+    DataLake:
+      type: object
+      description: Represents an Amazon Security Lake data lake configuration.
+      properties:
+        dataLakeArn:
+          type: string
+          description: The ARN of the data lake.
+          example: "arn:aws:securitylake:us-east-1:123456789012:data-lake/default"
+        region:
+          type: string
+          description: The AWS region where the data lake is configured.
+          example: "us-east-1"
+        status:
+          type: string
+          description: The current status of the data lake.
+          enum:
+            - INITIALIZED
+            - PENDING
+            - COMPLETED
+            - FAILED
+          example: "INITIALIZED"
+        encryptionConfiguration:
+          type: object
+          description: The encryption configuration for the data lake.
+          properties:
+            kmsKeyId:
+              type: string
+              description: The KMS key ID for encryption.
+        lifecycleConfiguration:
+          type: object
+          description: The lifecycle configuration for the data lake.
+          properties:
+            expiration:
+              type: object
+              properties:
+                days:
+                  type: integer
+            transitions:
+              type: array
+              items:
+                type: object
+        s3BucketArn:
+          type: string
+          description: The ARN of the S3 bucket where security data is stored.
+          example: "arn:aws:s3:::aws-security-data-lake-us-east-1-abc123"
+
+    LogSource:
+      type: object
+      description: Represents a log source configured in Amazon Security Lake.
+      properties:
+        sourceName:
+          type: string
+          description: The name of the log source.
+          example: "CLOUD_TRAIL_MGMT"
+        sourceVersion:
+          type: string
+          description: The version of the log source.
+          example: "2.0"
+        sourceStatus:
+          type: string
+          description: The status of the log source.
+          enum:
+            - ACTIVE
+            - DEACTIVATED
+            - PENDING
+          example: "ACTIVE"
+
+    Subscriber:
+      type: object
+      description: Represents a subscriber for Amazon Security Lake data.
+      properties:
+        subscriberId:
+          type: string
+          description: The unique identifier for the subscriber.
+          example: "sub-a1b2c3d4"
+        subscriberArn:
+          type: string
+          description: The ARN of the subscriber.
+          example: "arn:aws:securitylake:us-east-1:123456789012:subscriber/sub-a1b2c3d4"
+        subscriberName:
+          type: string
+          description: The name of the subscriber.
+          example: "MySIEMSubscriber"
+        subscriberDescription:
+          type: string
+          description: A description of the subscriber.
+        subscriberStatus:
+          type: string
+          description: The status of the subscriber.
+          enum:
+            - ACTIVE
+            - DEACTIVATED
+            - PENDING
+            - READY
+          example: "ACTIVE"
+        accessTypes:
+          type: array
+          description: The access types granted to the subscriber.
+          items:
+            type: string
+            enum:
+              - LAKEFORMATION
+              - S3
+        resourceShareArn:
+          type: string
+          description: The ARN of the resource share for AWS RAM-based access.
+        createdAt:
+          type: string
+          format: date-time
+          description: Timestamp when the subscriber was created.
+        updatedAt:
+          type: string
+          format: date-time
+          description: Timestamp when the subscriber was last updated.
+
+    CreateDataLakeRequest:
+      type: object
+      required:
+        - configurations
+      properties:
+        configurations:
+          type: array
+          description: Specifies the configurations to add to the data lake.
+          items:
+            type: object
+            properties:
+              encryptionConfiguration:
+                type: object
+              lifecycleConfiguration:
+                type: object
+              region:
+                type: string
+              replicationConfiguration:
+                type: object
+        metaStoreManagerRoleArn:
+          type: string
+          description: The ARN of the IAM role for the metadata store manager.
+
+    CreateDataLakeResponse:
+      type: object
+      properties:
+        dataLakes:
+          type: array
+          items:
+            $ref: '#/components/schemas/DataLake'
+
+    ListDataLakesResponse:
+      type: object
+      properties:
+        dataLakes:
+          type: array
+          items:
+            $ref: '#/components/schemas/DataLake'
+
+    UpdateDataLakeRequest:
+      type: object
+      properties:
+        configurations:
+          type: array
+          items:
+            type: object
+
+    CreateSubscriberRequest:
+      type: object
+      required:
+        - sources
+        - subscriberIdentity
+        - subscriberName
+      properties:
+        sources:
+          type: array
+          description: The supported AWS log sources and log types to subscribe to.
+          items:
+            type: object
+        subscriberDescription:
+          type: string
+          description: A description of the subscriber.
+        subscriberIdentity:
+          type: object
+          description: The identity of the subscriber for data access.
+          properties:
+            externalId:
+              type: string
+            principal:
+              type: string
+        subscriberName:
+          type: string
+          description: The name of the subscriber.
+        accessTypes:
+          type: array
+          items:
+            type: string
+            enum:
+              - LAKEFORMATION
+              - S3
+
+  securitySchemes:
+    AWSSignatureV4:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: AWS Signature Version 4 authentication
+
+security:
+  - AWSSignatureV4: []

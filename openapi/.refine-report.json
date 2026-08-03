@@ -1,0 +1,18 @@
+{
+  "provider": "amazon-security-lake",
+  "sources": [
+    "amazon-security-lake-data-lakes-api-openapi.yml",
+    "amazon-security-lake-log-sources-api-openapi.yml",
+    "amazon-security-lake-subscribers-api-openapi.yml"
+  ],
+  "outputs": [
+    "amazon-security-lake-data-lakes-api-openapi.yml",
+    "amazon-security-lake-log-sources-api-openapi.yml",
+    "amazon-security-lake-subscribers-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
