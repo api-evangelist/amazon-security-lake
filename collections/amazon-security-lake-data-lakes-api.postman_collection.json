@@ -1,0 +1,685 @@
+{
+  "item": [
+    {
+      "id": "539a128e-34a1-46e6-8703-22636c2c72b2",
+      "name": "Data Lakes",
+      "description": {
+        "content": "Data lake creation and management",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "17a69ce1-90e2-468b-bf99-eb75c7298f4d",
+          "name": "Amazon Security Lake Create Data Lake",
+          "request": {
+            "name": "Amazon Security Lake Create Data Lake",
+            "description": {
+              "content": "Creates a Security Lake data lake in the specified regions. Security Lake begins ingesting security data after you create the data lake.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "datalake"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "The AWS region.",
+                  "type": "any",
+                  "value": "{{region}}",
+                  "key": "region"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"configurations\": [\n    {\n      \"encryptionConfiguration\": \"<object>\",\n      \"lifecycleConfiguration\": \"<object>\",\n      \"region\": \"<string>\",\n      \"replicationConfiguration\": \"<object>\"\n    },\n    {\n      \"encryptionConfiguration\": \"<object>\",\n      \"lifecycleConfiguration\": \"<object>\",\n      \"region\": \"<string>\",\n      \"replicationConfiguration\": \"<object>\"\n    }\n  ],\n  \"metaStoreManagerRoleArn\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "416675fc-2398-4acc-aeb6-f80fc6565a57",
+              "name": "Successful response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "datalake"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The AWS region.",
+                      "type": "any",
+                      "value": "{{region}}",
+                      "key": "region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"configurations\": [\n    {\n      \"encryptionConfiguration\": \"<object>\",\n      \"lifecycleConfiguration\": \"<object>\",\n      \"region\": \"<string>\",\n      \"replicationConfiguration\": \"<object>\"\n    },\n    {\n      \"encryptionConfiguration\": \"<object>\",\n      \"lifecycleConfiguration\": \"<object>\",\n      \"region\": \"<string>\",\n      \"replicationConfiguration\": \"<object>\"\n    }\n  ],\n  \"metaStoreManagerRoleArn\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"dataLakes\": [\n    {\n      \"dataLakeArn\": \"arn:aws:securitylake:us-east-1:123456789012:data-lake/default\",\n      \"region\": \"us-east-1\",\n      \"status\": \"INITIALIZED\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "921652d5-2c8a-4c88-8326-b9f221fc6981",
+              "name": "Bad request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "datalake"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The AWS region.",
+                      "type": "any",
+                      "value": "{{region}}",
+                      "key": "region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"configurations\": [\n    {\n      \"encryptionConfiguration\": \"<object>\",\n      \"lifecycleConfiguration\": \"<object>\",\n      \"region\": \"<string>\",\n      \"replicationConfiguration\": \"<object>\"\n    },\n    {\n      \"encryptionConfiguration\": \"<object>\",\n      \"lifecycleConfiguration\": \"<object>\",\n      \"region\": \"<string>\",\n      \"replicationConfiguration\": \"<object>\"\n    }\n  ],\n  \"metaStoreManagerRoleArn\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "7aab55c5-8dcc-47a7-a35a-3a22bfdb55aa",
+              "name": "Internal server error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "datalake"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The AWS region.",
+                      "type": "any",
+                      "value": "{{region}}",
+                      "key": "region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"configurations\": [\n    {\n      \"encryptionConfiguration\": \"<object>\",\n      \"lifecycleConfiguration\": \"<object>\",\n      \"region\": \"<string>\",\n      \"replicationConfiguration\": \"<object>\"\n    },\n    {\n      \"encryptionConfiguration\": \"<object>\",\n      \"lifecycleConfiguration\": \"<object>\",\n      \"region\": \"<string>\",\n      \"replicationConfiguration\": \"<object>\"\n    }\n  ],\n  \"metaStoreManagerRoleArn\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8ce24605-7dfb-4416-8102-3921e94afe44",
+          "name": "Amazon Security Lake List Data Lakes",
+          "request": {
+            "name": "Amazon Security Lake List Data Lakes",
+            "description": {
+              "content": "Lists information about the data lakes in the current AWS account and Region.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "datalake"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "regions",
+                  "value": "<string>",
+                  "description": "List of regions to include in the response."
+                },
+                {
+                  "disabled": false,
+                  "key": "regions",
+                  "value": "<string>",
+                  "description": "List of regions to include in the response."
+                }
+              ],
+              "variable": [
+                {
+                  "description": "The AWS region.",
+                  "type": "any",
+                  "value": "{{region}}",
+                  "key": "region"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d889cd1c-2f01-4580-bc15-a8e8ca937743",
+              "name": "Successful response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "datalake"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "regions",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "regions",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "The AWS region.",
+                      "type": "any",
+                      "value": "{{region}}",
+                      "key": "region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"dataLakes\": [\n    {\n      \"dataLakeArn\": \"arn:aws:securitylake:us-east-1:123456789012:data-lake/default\",\n      \"region\": \"us-east-1\",\n      \"status\": \"INITIALIZED\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0834d9d1-663c-40c8-8e74-968db19ad730",
+          "name": "Amazon Security Lake Update Data Lake",
+          "request": {
+            "name": "Amazon Security Lake Update Data Lake",
+            "description": {
+              "content": "Updates the configuration of a data lake.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "datalake",
+                ":dataLakeArn"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "dataLakeArn",
+                  "description": "(Required) The ARN of the data lake to update."
+                },
+                {
+                  "description": "The AWS region.",
+                  "type": "any",
+                  "value": "{{region}}",
+                  "key": "region"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"configurations\": [\n    \"<object>\",\n    \"<object>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "d46904be-d791-4ab5-aae5-88a62baa4237",
+              "name": "Successful response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "datalake",
+                    ":dataLakeArn"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "dataLakeArn",
+                      "description": "(Required) The ARN of the data lake to update."
+                    },
+                    {
+                      "description": "The AWS region.",
+                      "type": "any",
+                      "value": "{{region}}",
+                      "key": "region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"configurations\": [\n    \"<object>\",\n    \"<object>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"dataLakeArn\": \"arn:aws:securitylake:us-east-1:123456789012:data-lake/default\",\n  \"region\": \"us-east-1\",\n  \"status\": \"INITIALIZED\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "043130fc-9b55-4b7d-a8fa-ce49be92edce",
+          "name": "Amazon Security Lake Delete Data Lake",
+          "request": {
+            "name": "Amazon Security Lake Delete Data Lake",
+            "description": {
+              "content": "Deletes the Amazon Security Lake data lake configuration object for the specified account and Region.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "datalake",
+                ":dataLakeArn"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "dataLakeArn",
+                  "description": "(Required) The ARN of the data lake to delete."
+                },
+                {
+                  "description": "The AWS region.",
+                  "type": "any",
+                  "value": "{{region}}",
+                  "key": "region"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "857b0a35-8cc3-4f16-81d4-31ed8e6b5e8f",
+              "name": "Successfully deleted.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "datalake",
+                    ":dataLakeArn"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "dataLakeArn",
+                      "description": "(Required) The ARN of the data lake to delete."
+                    },
+                    {
+                      "description": "The AWS region.",
+                      "type": "any",
+                      "value": "{{region}}",
+                      "key": "region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "41202ce7-7b56-4bf2-89d8-2ee3da519fe9",
+              "name": "Bad request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "datalake",
+                    ":dataLakeArn"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "dataLakeArn",
+                      "description": "(Required) The ARN of the data lake to delete."
+                    },
+                    {
+                      "description": "The AWS region.",
+                      "type": "any",
+                      "value": "{{region}}",
+                      "key": "region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "The AWS region.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "us-east-1",
+      "key": "region"
+    },
+    {
+      "type": "string",
+      "value": "https://securitylake.{{region}}.amazonaws.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "3e4e50fb-ca72-47fb-b20a-daad7a48d590",
+    "name": "Amazon Security Lake Data Lakes API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Amazon Security Lake is a service that automatically centralizes an organization's security data from cloud, on-premises, and custom sources into a purpose-built data lake stored in your own Amazon S3. It manages the data lifecycle and supports OCSF (Open Cybersecurity Schema Framework) for normalized security data analysis.\n\nContact Support:\n Name: Amazon Web Services",
+      "type": "text/plain"
+    }
+  }
+}

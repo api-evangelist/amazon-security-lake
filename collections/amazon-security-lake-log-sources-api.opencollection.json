@@ -1,0 +1,96 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Amazon Security Lake Data Lakes Log Sources API",
+    "version": "2018-05-10"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Log Sources",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Amazon Security Lake Get Data Lake Sources",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://securitylake.{region}.amazonaws.com/v1/datalake/sources",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Retrieves a snapshot of the current Region, including whether Amazon Security Lake is enabled for those accounts and which sources Security Lake is collecting data from."
+        },
+        {
+          "info": {
+            "name": "Amazon Security Lake Create AWS Log Source",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://securitylake.{region}.amazonaws.com/v1/logsources/aws",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Adds a natively supported Amazon Web Service as an Amazon Security Lake source."
+        },
+        {
+          "info": {
+            "name": "Amazon Security Lake Create Custom Log Source",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://securitylake.{region}.amazonaws.com/v1/logsources/custom",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Adds a third-party custom source in Amazon Security Lake to store log data."
+        },
+        {
+          "info": {
+            "name": "Amazon Security Lake List Log Sources",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://securitylake.{region}.amazonaws.com/v1/logsources",
+            "params": [
+              {
+                "name": "maxResults",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of results to return."
+              },
+              {
+                "name": "nextToken",
+                "value": "",
+                "type": "query",
+                "description": "Pagination token."
+              }
+            ]
+          },
+          "docs": "Retrieves the log sources in the current Amazon Web Services Region."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,102 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Amazon Security Lake Data Lakes API",
+    "version": "2018-05-10"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Data Lakes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Amazon Security Lake List Data Lakes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://securitylake.{region}.amazonaws.com/v1/datalake",
+            "params": [
+              {
+                "name": "regions",
+                "value": "",
+                "type": "query",
+                "description": "List of regions to include in the response."
+              }
+            ]
+          },
+          "docs": "Lists information about the data lakes in the current AWS account and Region."
+        },
+        {
+          "info": {
+            "name": "Amazon Security Lake Create Data Lake",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://securitylake.{region}.amazonaws.com/v1/datalake",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a Security Lake data lake in the specified regions. Security Lake begins ingesting security data after you create the data lake."
+        },
+        {
+          "info": {
+            "name": "Amazon Security Lake Update Data Lake",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://securitylake.{region}.amazonaws.com/v1/datalake/:dataLakeArn",
+            "params": [
+              {
+                "name": "dataLakeArn",
+                "value": "",
+                "type": "path",
+                "description": "The ARN of the data lake to update."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the configuration of a data lake."
+        },
+        {
+          "info": {
+            "name": "Amazon Security Lake Delete Data Lake",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://securitylake.{region}.amazonaws.com/v1/datalake/:dataLakeArn",
+            "params": [
+              {
+                "name": "dataLakeArn",
+                "value": "",
+                "type": "path",
+                "description": "The ARN of the data lake to delete."
+              }
+            ]
+          },
+          "docs": "Deletes the Amazon Security Lake data lake configuration object for the specified account and Region."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
