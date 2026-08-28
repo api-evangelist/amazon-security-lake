@@ -13,8 +13,8 @@ info:
     description.
   version: 1.0.0
 sourceDescriptions:
-- name: securityLakeApi
-  url: ../openapi/amazon-security-lake-openapi.yml
+- name: subscribersApi
+  url: ../openapi/amazon-security-lake-subscribers-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: provision-subscriber

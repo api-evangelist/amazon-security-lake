@@ -12,8 +12,8 @@ info:
     description.
   version: 1.0.0
 sourceDescriptions:
-- name: securityLakeApi
-  url: ../openapi/amazon-security-lake-openapi.yml
+- name: dataLakesApi
+  url: ../openapi/amazon-security-lake-data-lakes-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: decommission-data-lake

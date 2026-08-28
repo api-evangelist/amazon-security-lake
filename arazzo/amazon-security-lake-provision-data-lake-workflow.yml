@@ -13,8 +13,11 @@ info:
     the underlying OpenAPI description.
   version: 1.0.0
 sourceDescriptions:
-- name: securityLakeApi
-  url: ../openapi/amazon-security-lake-openapi.yml
+- name: dataLakesApi
+  url: ../openapi/amazon-security-lake-data-lakes-api-openapi.yml
+  type: openapi
+- name: logSourcesApi
+  url: ../openapi/amazon-security-lake-log-sources-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: provision-data-lake
