@@ -1,4 +1,4 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
   title: Amazon Security Lake Data Lakes API
   description: Amazon Security Lake is a service that automatically centralizes an organization's security data from cloud, on-premises, and custom sources into a purpose-built data lake stored in your own Amazon S3. It manages the data lifecycle and supports OCSF (Open Cybersecurity Schema Framework) for normalized security data analysis.
@@ -152,6 +152,13 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
+    CreateDataLakeResponse:
+      type: object
+      properties:
+        dataLakes:
+          type: array
+          items:
+            $ref: '#/components/schemas/DataLake'
     UpdateDataLakeRequest:
       type: object
       properties:
@@ -159,6 +166,35 @@ components:
           type: array
           items:
             type: object
+    CreateDataLakeRequest:
+      type: object
+      required:
+      - configurations
+      properties:
+        configurations:
+          type: array
+          description: Specifies the configurations to add to the data lake.
+          items:
+            type: object
+            properties:
+              encryptionConfiguration:
+                type: object
+              lifecycleConfiguration:
+                type: object
+              region:
+                type: string
+              replicationConfiguration:
+                type: object
+        metaStoreManagerRoleArn:
+          type: string
+          description: The ARN of the IAM role for the metadata store manager.
+    ListDataLakesResponse:
+      type: object
+      properties:
+        dataLakes:
+          type: array
+          items:
+            $ref: '#/components/schemas/DataLake'
     DataLake:
       type: object
       description: Represents an Amazon Security Lake data lake configuration.
@@ -204,42 +240,6 @@ components:
           type: string
           description: The ARN of the S3 bucket where security data is stored.
           example: arn:aws:s3:::aws-security-data-lake-us-east-1-abc123
-    ListDataLakesResponse:
-      type: object
-      properties:
-        dataLakes:
-          type: array
-          items:
-            $ref: '#/components/schemas/DataLake'
-    CreateDataLakeResponse:
-      type: object
-      properties:
-        dataLakes:
-          type: array
-          items:
-            $ref: '#/components/schemas/DataLake'
-    CreateDataLakeRequest:
-      type: object
-      required:
-      - configurations
-      properties:
-        configurations:
-          type: array
-          description: Specifies the configurations to add to the data lake.
-          items:
-            type: object
-            properties:
-              encryptionConfiguration:
-                type: object
-              lifecycleConfiguration:
-                type: object
-              region:
-                type: string
-              replicationConfiguration:
-                type: object
-        metaStoreManagerRoleArn:
-          type: string
-          description: The ARN of the IAM role for the metadata store manager.
   securitySchemes:
     AWSSignatureV4:
       type: apiKey
