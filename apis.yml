@@ -49,6 +49,8 @@ apis:
   humanURL: https://docs.aws.amazon.com/security-lake/latest/APIReference/Welcome.html
   baseURL: https://securitylake.{region}.amazonaws.com
   tags:
+  - Data Lake
+  tags_raw:
   - Data Lakes
   properties:
   - type: OpenAPI
