@@ -1,9 +1,7 @@
 {
   "provider": "amazon-security-lake",
   "sources": [
-    "amazon-security-lake-data-lakes-api-openapi.yml",
-    "amazon-security-lake-log-sources-api-openapi.yml",
-    "amazon-security-lake-subscribers-api-openapi.yml"
+    "_ae-authored/amazon-security-lake-openapi.yml"
   ],
   "outputs": [
     "amazon-security-lake-data-lakes-api-openapi.yml",
@@ -14,7 +12,13 @@
   "errors": [],
   "warnings": [],
   "notes": [
+    "sourced from openapi/_original/ (0 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "amazon-security-lake-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
     "apis.yml register: already-registered"
   ],
-  "skipped": []
+  "skipped": [
+    "amazon-security-lake-data-lakes-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "amazon-security-lake-log-sources-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "amazon-security-lake-subscribers-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

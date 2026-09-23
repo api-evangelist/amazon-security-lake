@@ -166,28 +166,6 @@ components:
           type: array
           items:
             type: object
-    CreateDataLakeRequest:
-      type: object
-      required:
-      - configurations
-      properties:
-        configurations:
-          type: array
-          description: Specifies the configurations to add to the data lake.
-          items:
-            type: object
-            properties:
-              encryptionConfiguration:
-                type: object
-              lifecycleConfiguration:
-                type: object
-              region:
-                type: string
-              replicationConfiguration:
-                type: object
-        metaStoreManagerRoleArn:
-          type: string
-          description: The ARN of the IAM role for the metadata store manager.
     ListDataLakesResponse:
       type: object
       properties:
@@ -240,6 +218,28 @@ components:
           type: string
           description: The ARN of the S3 bucket where security data is stored.
           example: arn:aws:s3:::aws-security-data-lake-us-east-1-abc123
+    CreateDataLakeRequest:
+      type: object
+      required:
+      - configurations
+      properties:
+        configurations:
+          type: array
+          description: Specifies the configurations to add to the data lake.
+          items:
+            type: object
+            properties:
+              encryptionConfiguration:
+                type: object
+              lifecycleConfiguration:
+                type: object
+              region:
+                type: string
+              replicationConfiguration:
+                type: object
+        metaStoreManagerRoleArn:
+          type: string
+          description: The ARN of the IAM role for the metadata store manager.
   securitySchemes:
     AWSSignatureV4:
       type: apiKey

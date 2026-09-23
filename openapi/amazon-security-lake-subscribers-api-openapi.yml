@@ -1,6 +1,6 @@
 openapi: 3.2.0
 info:
-  title: Amazon Security Lake Data Lakes Subscribers API
+  title: Amazon Security Lake Subscribers API
   description: Amazon Security Lake is a service that automatically centralizes an organization's security data from cloud, on-premises, and custom sources into a purpose-built data lake stored in your own Amazon S3. It manages the data lifecycle and supports OCSF (Open Cybersecurity Schema Framework) for normalized security data analysis.
   version: 2018-05-10
   contact:
@@ -195,39 +195,6 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
-    CreateSubscriberRequest:
-      type: object
-      required:
-      - sources
-      - subscriberIdentity
-      - subscriberName
-      properties:
-        sources:
-          type: array
-          description: The supported AWS log sources and log types to subscribe to.
-          items:
-            type: object
-        subscriberDescription:
-          type: string
-          description: A description of the subscriber.
-        subscriberIdentity:
-          type: object
-          description: The identity of the subscriber for data access.
-          properties:
-            externalId:
-              type: string
-            principal:
-              type: string
-        subscriberName:
-          type: string
-          description: The name of the subscriber.
-        accessTypes:
-          type: array
-          items:
-            type: string
-            enum:
-            - LAKEFORMATION
-            - S3
     Subscriber:
       type: object
       description: Represents a subscriber for Amazon Security Lake data.
@@ -275,6 +242,39 @@ components:
           type: string
           format: date-time
           description: Timestamp when the subscriber was last updated.
+    CreateSubscriberRequest:
+      type: object
+      required:
+      - sources
+      - subscriberIdentity
+      - subscriberName
+      properties:
+        sources:
+          type: array
+          description: The supported AWS log sources and log types to subscribe to.
+          items:
+            type: object
+        subscriberDescription:
+          type: string
+          description: A description of the subscriber.
+        subscriberIdentity:
+          type: object
+          description: The identity of the subscriber for data access.
+          properties:
+            externalId:
+              type: string
+            principal:
+              type: string
+        subscriberName:
+          type: string
+          description: The name of the subscriber.
+        accessTypes:
+          type: array
+          items:
+            type: string
+            enum:
+            - LAKEFORMATION
+            - S3
   securitySchemes:
     AWSSignatureV4:
       type: apiKey
