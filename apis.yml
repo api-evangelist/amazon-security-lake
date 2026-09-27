@@ -101,7 +101,7 @@ apis:
     url: json-schema/amazon-security-lake-subscriber-schema.json
 common:
 - type: Website
-  url: https://amazon.com
+  url: https://aws.amazon.com/security-lake/
 - type: AgenticAccess
   url: agentic-access/amazon-security-lake-agentic-access.yml
 - type: TrustCenter
@@ -265,5 +265,5 @@ integrations:
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
-x-parent: aws
+x-parent: amazon-web-services
 x-relationship: product

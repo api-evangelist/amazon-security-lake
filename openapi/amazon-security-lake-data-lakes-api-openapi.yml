@@ -152,27 +152,6 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
-    CreateDataLakeResponse:
-      type: object
-      properties:
-        dataLakes:
-          type: array
-          items:
-            $ref: '#/components/schemas/DataLake'
-    UpdateDataLakeRequest:
-      type: object
-      properties:
-        configurations:
-          type: array
-          items:
-            type: object
-    ListDataLakesResponse:
-      type: object
-      properties:
-        dataLakes:
-          type: array
-          items:
-            $ref: '#/components/schemas/DataLake'
     DataLake:
       type: object
       description: Represents an Amazon Security Lake data lake configuration.
@@ -218,6 +197,13 @@ components:
           type: string
           description: The ARN of the S3 bucket where security data is stored.
           example: arn:aws:s3:::aws-security-data-lake-us-east-1-abc123
+    CreateDataLakeResponse:
+      type: object
+      properties:
+        dataLakes:
+          type: array
+          items:
+            $ref: '#/components/schemas/DataLake'
     CreateDataLakeRequest:
       type: object
       required:
@@ -240,6 +226,20 @@ components:
         metaStoreManagerRoleArn:
           type: string
           description: The ARN of the IAM role for the metadata store manager.
+    ListDataLakesResponse:
+      type: object
+      properties:
+        dataLakes:
+          type: array
+          items:
+            $ref: '#/components/schemas/DataLake'
+    UpdateDataLakeRequest:
+      type: object
+      properties:
+        configurations:
+          type: array
+          items:
+            type: object
   securitySchemes:
     AWSSignatureV4:
       type: apiKey
