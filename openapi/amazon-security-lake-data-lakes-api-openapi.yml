@@ -152,28 +152,13 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
-    CreateDataLakeRequest:
+    ListDataLakesResponse:
       type: object
-      required:
-      - configurations
       properties:
-        configurations:
+        dataLakes:
           type: array
-          description: Specifies the configurations to add to the data lake.
           items:
-            type: object
-            properties:
-              encryptionConfiguration:
-                type: object
-              lifecycleConfiguration:
-                type: object
-              region:
-                type: string
-              replicationConfiguration:
-                type: object
-        metaStoreManagerRoleArn:
-          type: string
-          description: The ARN of the IAM role for the metadata store manager.
+            $ref: '#/components/schemas/DataLake'
     DataLake:
       type: object
       description: Represents an Amazon Security Lake data lake configuration.
@@ -233,13 +218,28 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/DataLake'
-    ListDataLakesResponse:
+    CreateDataLakeRequest:
       type: object
+      required:
+      - configurations
       properties:
-        dataLakes:
+        configurations:
           type: array
+          description: Specifies the configurations to add to the data lake.
           items:
-            $ref: '#/components/schemas/DataLake'
+            type: object
+            properties:
+              encryptionConfiguration:
+                type: object
+              lifecycleConfiguration:
+                type: object
+              region:
+                type: string
+              replicationConfiguration:
+                type: object
+        metaStoreManagerRoleArn:
+          type: string
+          description: The ARN of the IAM role for the metadata store manager.
   securitySchemes:
     AWSSignatureV4:
       type: apiKey
