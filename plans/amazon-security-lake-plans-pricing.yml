@@ -1,0 +1,89 @@
+# Pricing transcribed from the provider's own page — see provenance. Numbers are quoted, not derived.
+generated: '2026-10-28'
+method: searched
+source: https://aws.amazon.com/security-lake/pricing/
+sources:
+- https://aws.amazon.com/security-lake/pricing/
+provenance:
+  tool: engine/economics/harvest_pricing.py
+  run: 20261028T161713
+  grounding: every price_text was found verbatim in the fetched page text
+audience: business-product
+pricing_basis: usage-other
+delivery:
+  delivery: managed
+  method: page
+  read: '2026-10-28'
+published: true
+note: Pricing tables on the page render via unresolved price tokens; numeric rates only appear in the
+  pricing examples and FAQ. Data storage billed separately via standard Amazon S3 charges; no charge for
+  third-party/own data.
+plan_count: 4
+currency: USD
+plans:
+- name: CloudTrail logs ingestion (US East N. Virginia example)
+  price_text: $0.75 per GB
+  price: 0.75
+  currency: USD
+  period: per-use
+  unit: GB ingested
+- name: Other AWS logs ingestion (US East N. Virginia example)
+  price_text: $0.25 per GB
+  price: 0.25
+  currency: USD
+  period: per-use
+  unit: GB ingested
+- name: Data normalization
+  price_text: $0.035 per GB
+  price: 0.035
+  currency: USD
+  period: per-use
+  unit: GB
+- name: Free trial
+  price_text: try Security Lake for 15 days at no cost
+  price: 15
+  period: none
+  unit: days
+  included_quota: full set of features during the free trial
+x-canonical:
+  generated: '2026-11-01'
+  vocabulary: engine/economics/plans-canonical.yml
+  models:
+  - hybrid
+  - subscription
+  units:
+  - data
+  - period
+  plans:
+  - name: CloudTrail logs ingestion (US East N. Virginia example)
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - data
+    periods:
+    - other
+  - name: Other AWS logs ingestion (US East N. Virginia example)
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - data
+    periods:
+    - other
+  - name: Data normalization
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - data
+    periods:
+    - other
+  - name: Free trial
+    access: other
+    model: subscription
+    model_how: derived
+    units:
+    - period
+    periods:
+    - none
