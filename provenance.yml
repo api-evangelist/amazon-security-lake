@@ -29,6 +29,12 @@ artifacts:
   authentication/amazon-security-lake-authentication.yml:
     method: derived
     evidence: declared in the artifact
+  certification/observations-2026-11-11.jsonl:
+    method: unknown
+    evidence: no authorship recorded
+  certification/status.yml:
+    method: unknown
+    evidence: no authorship recorded
   collections/amazon-security-lake-data-lakes-api.opencollection.json:
     method: derived
     evidence: openapi/amazon-security-lake-data-lakes-api
@@ -53,6 +59,24 @@ artifacts:
   collections/amazon-security-lake.postman_collection.json:
     method: derived
     evidence: openapi/amazon-security-lake
+  compliance/amazon-security-lake-compliance.yml:
+    method: harvested
+    evidence: declared in the artifact
+  conformance/amazon-security-lake-conformance.yml:
+    method: derived
+    evidence: declared in the artifact
+  conventions/amazon-security-lake-conventions.yml:
+    method: derived
+    evidence: declared in the artifact
+  data-license/amazon-security-lake-data-license.yml:
+    method: harvested
+    evidence: declared in the artifact
+  data-model/amazon-security-lake-data-model.yml:
+    method: derived
+    evidence: declared in the artifact
+  errors/amazon-security-lake-problem-types.yml:
+    method: derived
+    evidence: declared in the artifact
   examples/amazon-security-lake-data-lake-example.json:
     method: unknown
     evidence: no authorship recorded
@@ -68,6 +92,9 @@ artifacts:
   front-door-ai/2026-09-17.yml:
     method: unknown
     evidence: no authorship recorded
+  hosts/amazon-security-lake-hosts.yml:
+    method: derived
+    evidence: declared in the artifact
   integrations/_index.yml:
     method: generated
     evidence: carries an API Evangelist house phrase
@@ -77,13 +104,49 @@ artifacts:
   json-ld/amazon-security-lake-context.jsonld:
     method: unknown
     evidence: no authorship recorded
+  json-schema/amazon-security-lake-create-subscriber-notification-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/amazon-security-lake-create-subscriber-notification-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
   json-schema/amazon-security-lake-data-lake-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/amazon-security-lake-delete-subscriber-notification-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/amazon-security-lake-delete-subscriber-notification-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/amazon-security-lake-list-tags-for-resource-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/amazon-security-lake-list-tags-for-resource-response-schema.json:
     method: unknown
     evidence: no authorship recorded
   json-schema/amazon-security-lake-log-source-schema.json:
     method: unknown
     evidence: no authorship recorded
   json-schema/amazon-security-lake-subscriber-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/amazon-security-lake-tag-resource-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/amazon-security-lake-tag-resource-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/amazon-security-lake-untag-resource-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/amazon-security-lake-untag-resource-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/amazon-security-lake-update-subscriber-notification-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/amazon-security-lake-update-subscriber-notification-response-schema.json:
     method: unknown
     evidence: no authorship recorded
   json-structure/amazon-security-lake-data-lake-structure.json:
@@ -98,7 +161,7 @@ artifacts:
   kin/checks-2026-10-23T222754.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
-  kin/checks-2026-11-02T082323.yml:
+  kin/checks-2026-11-06T143934.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
   kin/score-2026-09-23T000603.yml:
@@ -167,6 +230,18 @@ artifacts:
   kin/score-2026-11-02T082323.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-11-06T143934.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  llms/amazon-security-lake-llms-provenance.yml:
+    method: unknown
+    evidence: no authorship recorded
+  llms/amazon-security-lake-llms.txt:
+    method: unknown
+    evidence: no authorship recorded
+  mcp/amazon-security-lake-mcp.yml:
+    method: derived
+    evidence: declared in the artifact
   openapi/amazon-security-lake-data-lakes-api-openapi.yml:
     method: unknown
     evidence: no authorship recorded
@@ -182,16 +257,28 @@ artifacts:
   openapi/amazon-security-lake-tags-api-openapi.yml:
     method: unknown
     evidence: no authorship recorded
+  packages/amazon-security-lake-packages.yml:
+    method: searched
+    evidence: declared in the artifact
+  patterns/amazon-security-lake-patterns.yml:
+    method: derived
+    evidence: declared in the artifact
   plans/amazon-security-lake-plans-pricing.yml:
     method: searched
     evidence: declared in the artifact
   postman/amazon-security-lake.postman_collection.json:
     method: derived
     evidence: openapi/amazon-security-lake
+  privacy/amazon-security-lake-privacy-policy.yml:
+    method: harvested
+    evidence: declared in the artifact
   rate-limits/amazon-security-lake-rate-limits.yml:
     method: generated
     evidence: declared in the artifact
   rules/amazon-security-lake-jsonschema-spectral-rules.yml:
+    method: generated
+    evidence: declared in the artifact
+  rules/amazon-security-lake-rules.yml:
     method: generated
     evidence: declared in the artifact
   rules/amazon-security-lake-spectral-rules.yml:
@@ -210,8 +297,30 @@ artifacts:
     method: generated
     evidence: declared in the artifact
   smithy/securitylake-2018-05-10.json:
+    method: harvested
+    evidence: byte-identical to https://raw.githubusercontent.com/aws/api-models-aws/3cd98287b471c106254abd89279cc87308d38bfd/models/securitylake/service/2018-05-10/securitylake-2018-05-10.json
+      (sha256 44e237a05363, fetched 2026-11-11T21:15:18+00:00)
+  terms/amazon-security-lake-terms-of-service.yml:
+    method: harvested
+    evidence: declared in the artifact
+  vendors/amazon-security-lake-vendors.yml:
     method: unknown
     evidence: no authorship recorded
   vocabulary/amazon-security-lake-vocabulary.yaml:
+    method: unknown
+    evidence: no authorship recorded
+  vocabulary/amazon-security-lake-vocabulary.yml:
+    method: derived
+    evidence: declared in the artifact
+  well-known/amazon-security-lake-midway-auth-openid-configuration.json:
+    method: unknown
+    evidence: no authorship recorded
+  well-known/amazon-security-lake-repost-security.txt:
+    method: unknown
+    evidence: no authorship recorded
+  well-known/amazon-security-lake-security.txt:
+    method: unknown
+    evidence: no authorship recorded
+  well-known/amazon-security-lake-well-known.yml:
     method: unknown
     evidence: no authorship recorded

@@ -2,6 +2,7 @@
 generated: '2026-10-28'
 method: searched
 source: https://aws.amazon.com/security-lake/pricing/
+name: Amazon Security Lake API Plans
 sources:
 - https://aws.amazon.com/security-lake/pricing/
 provenance:
@@ -46,7 +47,7 @@ plans:
   unit: days
   included_quota: full set of features during the free trial
 x-canonical:
-  generated: '2026-11-06'
+  generated: '2026-11-13'
   vocabulary: engine/economics/plans-canonical.yml
   models:
   - hybrid

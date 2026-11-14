@@ -26,19 +26,18 @@ accessModel:
   - plans
   - authentication
   - security
-  generated: '2026-11-06'
+  generated: '2026-11-13'
   method: derived
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/amazon-security-lake.png
 name: Amazon Security Lake
-description: Amazon Security Lake is a service that automatically centralizes an organization's security
-  data from cloud, on-premises, and custom sources into a purpose-built data lake stored in your own Amazon
-  S3. It manages the data lifecycle to help you optimize storage and supports OCSF (Open Cybersecurity
-  Schema Framework) for normalized security data analysis.
+description: Amazon Security Lake is a service that automatically centralizes an organization's security data from cloud, on-premises, and custom
+  sources into a purpose-built data lake stored in your own Amazon S3. It manages the data lifecycle to help you optimize storage and supports
+  OCSF (Open Cybersecurity Schema Framework) for normalized security data analysis.
 url: https://aws.amazon.com/security-lake/
 baseURL: https://securitylake.amazonaws.com
 kind: company
 created: '2026-03-16'
-modified: '2026-09-16'
+modified: '2026-11-11'
 tags:
 - Amazon Web Services
 - Data Lake
@@ -51,86 +50,48 @@ tags_raw:
 - Security
 - SIEM
 - Threat Detection
-apis:
-- aid: amazon-security-lake:amazon-security-lake-data-lakes-api
-  name: Amazon Security Lake Data Lakes API
-  description: Data lake creation and management
-  humanURL: https://docs.aws.amazon.com/security-lake/latest/APIReference/Welcome.html
-  baseURL: https://securitylake.{region}.amazonaws.com
-  tags:
-  - Data Lake
-  tags_raw:
-  - Data Lakes
-  properties:
-  - type: OpenAPI
-    url: openapi/amazon-security-lake-data-lakes-api-openapi.yml
-  - type: Documentation
-    url: https://docs.aws.amazon.com/security-lake/latest/APIReference/Welcome.html
-  - type: JSONSchema
-    url: json-schema/amazon-security-lake-data-lake-schema.json
-  - type: JSONSchema
-    url: json-schema/amazon-security-lake-log-source-schema.json
-  - type: JSONSchema
-    url: json-schema/amazon-security-lake-subscriber-schema.json
-- aid: amazon-security-lake:amazon-security-lake-log-sources-api
-  name: Amazon Security Lake Log Sources API
-  description: AWS and custom log source management
-  humanURL: https://docs.aws.amazon.com/security-lake/latest/APIReference/Welcome.html
-  baseURL: https://securitylake.{region}.amazonaws.com
-  tags:
-  - Log Sources
-  properties:
-  - type: OpenAPI
-    url: openapi/amazon-security-lake-log-sources-api-openapi.yml
-  - type: Documentation
-    url: https://docs.aws.amazon.com/security-lake/latest/APIReference/Welcome.html
-  - type: JSONSchema
-    url: json-schema/amazon-security-lake-data-lake-schema.json
-  - type: JSONSchema
-    url: json-schema/amazon-security-lake-log-source-schema.json
-  - type: JSONSchema
-    url: json-schema/amazon-security-lake-subscriber-schema.json
-- aid: amazon-security-lake:amazon-security-lake-subscribers-api
-  name: Amazon Security Lake Subscribers API
-  description: Subscriber management for data access
-  humanURL: https://docs.aws.amazon.com/security-lake/latest/APIReference/Welcome.html
-  baseURL: https://securitylake.{region}.amazonaws.com
-  tags:
-  - Subscribers
-  properties:
-  - type: OpenAPI
-    url: openapi/amazon-security-lake-subscribers-api-openapi.yml
-  - type: Documentation
-    url: https://docs.aws.amazon.com/security-lake/latest/APIReference/Welcome.html
-  - type: JSONSchema
-    url: json-schema/amazon-security-lake-data-lake-schema.json
-  - type: JSONSchema
-    url: json-schema/amazon-security-lake-log-source-schema.json
-  - type: JSONSchema
-    url: json-schema/amazon-security-lake-subscriber-schema.json
-- aid: amazon-security-lake:amazon-security-lake-notification-api
-  name: Amazon Security Lake Security Lake Notification API
-  description: >-
-    The Security Lake Notification API from Amazon Security Lake — 1 operation(s) for security lake notification.
-  humanURL: https://docs.aws.amazon.com/security-lake/latest/APIReference/Welcome.html
-  baseURL: https://securitylake.{region}.amazonaws.com
-  tags:
-  - Security Lake Notification
-  properties:
-  - type: OpenAPI
-    url: openapi/amazon-security-lake-notification-api-openapi.yml
-- aid: amazon-security-lake:amazon-security-lake-tags-api
-  name: Amazon Security Lake Security Lake Tags API
-  description: >-
-    The Security Lake Tags API from Amazon Security Lake — 1 operation(s) for security lake tags.
-  humanURL: https://docs.aws.amazon.com/security-lake/latest/APIReference/Welcome.html
-  baseURL: https://securitylake.{region}.amazonaws.com
-  tags:
-  - Security Lake Tags
-  properties:
-  - type: OpenAPI
-    url: openapi/amazon-security-lake-tags-api-openapi.yml
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com
 common:
+- type: Spectral
+  url: rules/amazon-security-lake-spectral-rules.yml
+- type: Spectral
+  url: rules/amazon-security-lake-rules.yml
+- type: Spectral
+  url: rules/amazon-security-lake-jsonschema-spectral-rules.yml
+- type: Vocabulary
+  url: vocabulary/amazon-security-lake-vocabulary.yml
+- type: DataModel
+  url: data-model/amazon-security-lake-data-model.yml
+- type: Conventions
+  url: conventions/amazon-security-lake-conventions.yml
+- type: ErrorCatalog
+  url: errors/amazon-security-lake-problem-types.yml
+- type: Conformance
+  url: conformance/amazon-security-lake-conformance.yml
+- type: LLMsTxt
+  url: llms/amazon-security-lake-llms.txt
+- type: SecurityTxt
+  url: well-known/amazon-security-lake-security.txt
+- type: SecurityTxt
+  url: well-known/amazon-security-lake-repost-security.txt
+- type: WellKnown
+  url: well-known/amazon-security-lake-well-known.yml
+- type: Hosts
+  url: hosts/amazon-security-lake-hosts.yml
+- type: Vendors
+  url: vendors/amazon-security-lake-vendors.yml
+- type: SDKs
+  url: packages/amazon-security-lake-packages.yml
+- type: Packages
+  url: packages/amazon-security-lake-packages.yml
+- type: SignUp
+  url: https://signin.aws.amazon.com/signup?request_type=builderId
+- type: Security
+  url: https://aws.amazon.com/security/?nc2=h_dsc_aa_sec
+- type: Newsroom
+  url: https://aws.amazon.com/media/?nc2=h_sol_ind_med
 - type: Plans
   url: plans/amazon-security-lake-plans-pricing.yml
 - type: RateLimits
@@ -215,11 +176,9 @@ common:
 - type: Features
   data:
   - name: Automatic Data Centralization
-    description: Automatically centralizes security data from AWS services, third-party tools, and custom
-      sources into a single data lake.
+    description: Automatically centralizes security data from AWS services, third-party tools, and custom sources into a single data lake.
   - name: OCSF Normalization
-    description: Converts security data to the Open Cybersecurity Schema Framework (OCSF) for standardized
-      analysis across tools.
+    description: Converts security data to the Open Cybersecurity Schema Framework (OCSF) for standardized analysis across tools.
   - name: Apache Parquet Format
     description: Stores all security data in Apache Parquet format optimized for analytical query performance.
   - name: Multi-Account Support
@@ -227,31 +186,25 @@ common:
   - name: Lifecycle Management
     description: Automatically manages storage lifecycle with configurable retention and tiering policies.
   - name: Subscriber Access
-    description: Grant third-party SIEMs and analytics tools direct query access to your security data
-      lake.
+    description: Grant third-party SIEMs and analytics tools direct query access to your security data lake.
   - name: Native AWS Integration
-    description: Native connectors for CloudTrail, VPC Flow Logs, Route 53, Security Hub, and EKS audit
-      logs.
+    description: Native connectors for CloudTrail, VPC Flow Logs, Route 53, Security Hub, and EKS audit logs.
   - name: Custom Log Sources
     description: Ingest custom and third-party security data sources in OCSF format.
 - type: UseCases
   data:
   - name: Security Data Centralization
-    description: Aggregate all security data from across a multi-account AWS environment into one queryable
-      data lake.
+    description: Aggregate all security data from across a multi-account AWS environment into one queryable data lake.
   - name: SIEM Integration
-    description: Provide SIEM platforms like Splunk, Sumo Logic, and Microsoft Sentinel direct access
-      to normalized security data.
+    description: Provide SIEM platforms like Splunk, Sumo Logic, and Microsoft Sentinel direct access to normalized security data.
   - name: Threat Hunting
-    description: Enable security analysts to query normalized OCSF data for threat hunting and forensic
-      investigation.
+    description: Enable security analysts to query normalized OCSF data for threat hunting and forensic investigation.
   - name: Compliance Data Retention
     description: Retain security logs in a cost-optimized data lake for compliance audit requirements.
   - name: Security Analytics
     description: Run advanced analytics and ML models against normalized security data for anomaly detection.
   - name: Multi-Cloud Security Data
-    description: Centralize security data from on-premises and other cloud providers alongside AWS security
-      data.
+    description: Centralize security data from on-premises and other cloud providers alongside AWS security data.
 - type: Integrations
   data:
   - name: AWS CloudTrail
@@ -290,6 +243,113 @@ common:
   url: examples/amazon-security-lake-subscriber-example.json
 - type: Integrations
   url: https://aws.amazon.com/partners/
+- type: UsageTerms
+  url: terms/amazon-security-lake-terms-of-service.yml
+- type: DataProcessing
+  url: privacy/amazon-security-lake-privacy-policy.yml
+- type: Attestations
+  url: compliance/amazon-security-lake-compliance.yml
+- type: DataLicense
+  url: data-license/amazon-security-lake-data-license.yml
+apis:
+- aid: amazon-security-lake:amazon-security-lake-data-lakes-api
+  name: Amazon Security Lake Data Lakes API
+  description: Data lake creation and management
+  humanURL: https://docs.aws.amazon.com/security-lake/latest/APIReference/Welcome.html
+  baseURL: https://securitylake.{region}.amazonaws.com
+  tags:
+  - Data Lake
+  tags_raw:
+  - Data Lakes
+  properties:
+  - type: OpenAPI
+    url: openapi/amazon-security-lake-data-lakes-api-openapi.yml
+  - type: Documentation
+    url: https://docs.aws.amazon.com/security-lake/latest/APIReference/Welcome.html
+  - type: JSONSchema
+    url: json-schema/amazon-security-lake-data-lake-schema.json
+  - type: JSONSchema
+    url: json-schema/amazon-security-lake-log-source-schema.json
+  - type: JSONSchema
+    url: json-schema/amazon-security-lake-subscriber-schema.json
+- aid: amazon-security-lake:amazon-security-lake-log-sources-api
+  name: Amazon Security Lake Log Sources API
+  description: AWS and custom log source management
+  humanURL: https://docs.aws.amazon.com/security-lake/latest/APIReference/Welcome.html
+  baseURL: https://securitylake.{region}.amazonaws.com
+  tags:
+  - Log Sources
+  properties:
+  - type: OpenAPI
+    url: openapi/amazon-security-lake-log-sources-api-openapi.yml
+  - type: Documentation
+    url: https://docs.aws.amazon.com/security-lake/latest/APIReference/Welcome.html
+  - type: JSONSchema
+    url: json-schema/amazon-security-lake-data-lake-schema.json
+  - type: JSONSchema
+    url: json-schema/amazon-security-lake-log-source-schema.json
+  - type: JSONSchema
+    url: json-schema/amazon-security-lake-subscriber-schema.json
+- aid: amazon-security-lake:amazon-security-lake-subscribers-api
+  name: Amazon Security Lake Subscribers API
+  description: Subscriber management for data access
+  humanURL: https://docs.aws.amazon.com/security-lake/latest/APIReference/Welcome.html
+  baseURL: https://securitylake.{region}.amazonaws.com
+  tags:
+  - Subscribers
+  properties:
+  - type: OpenAPI
+    url: openapi/amazon-security-lake-subscribers-api-openapi.yml
+  - type: Documentation
+    url: https://docs.aws.amazon.com/security-lake/latest/APIReference/Welcome.html
+  - type: JSONSchema
+    url: json-schema/amazon-security-lake-data-lake-schema.json
+  - type: JSONSchema
+    url: json-schema/amazon-security-lake-subscriber-schema.json
+- aid: amazon-security-lake:amazon-security-lake-notification-api
+  name: Amazon Security Lake Security Lake Notification API
+  description: The Security Lake Notification API from Amazon Security Lake — 1 operation(s) for security lake notification.
+  humanURL: https://docs.aws.amazon.com/security-lake/latest/APIReference/Welcome.html
+  baseURL: https://securitylake.{region}.amazonaws.com
+  tags:
+  - Security Lake Notification
+  properties:
+  - type: OpenAPI
+    url: openapi/amazon-security-lake-notification-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/amazon-security-lake-update-subscriber-notification-request-schema.json
+  - type: JSONSchema
+    url: json-schema/amazon-security-lake-create-subscriber-notification-request-schema.json
+  - type: JSONSchema
+    url: json-schema/amazon-security-lake-delete-subscriber-notification-request-schema.json
+  - type: JSONSchema
+    url: json-schema/amazon-security-lake-create-subscriber-notification-response-schema.json
+  - type: JSONSchema
+    url: json-schema/amazon-security-lake-update-subscriber-notification-response-schema.json
+  - type: JSONSchema
+    url: json-schema/amazon-security-lake-delete-subscriber-notification-response-schema.json
+- aid: amazon-security-lake:amazon-security-lake-tags-api
+  name: Amazon Security Lake Security Lake Tags API
+  description: The Security Lake Tags API from Amazon Security Lake — 1 operation(s) for security lake tags.
+  humanURL: https://docs.aws.amazon.com/security-lake/latest/APIReference/Welcome.html
+  baseURL: https://securitylake.{region}.amazonaws.com
+  tags:
+  - Security Lake Tags
+  properties:
+  - type: OpenAPI
+    url: openapi/amazon-security-lake-tags-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/amazon-security-lake-tag-resource-request-schema.json
+  - type: JSONSchema
+    url: json-schema/amazon-security-lake-untag-resource-request-schema.json
+  - type: JSONSchema
+    url: json-schema/amazon-security-lake-list-tags-for-resource-response-schema.json
+  - type: JSONSchema
+    url: json-schema/amazon-security-lake-list-tags-for-resource-request-schema.json
+  - type: JSONSchema
+    url: json-schema/amazon-security-lake-tag-resource-response-schema.json
+  - type: JSONSchema
+    url: json-schema/amazon-security-lake-untag-resource-response-schema.json
 integrations:
 - name: Partner Programs
 - name: Resources
@@ -299,8 +359,10 @@ integrations:
 - name: AWS Partner Central
 - name: Partner Paths
 - name: co-sell with AWS
-maintainers:
-- FN: Kin Lane
-  email: kin@apievangelist.com
 x-parent: amazon-web-services
 x-relationship: product
+x-enrichment:
+  date: '2026-11-11'
+  status: enriched
+  artifacts_added: 2
+  pass: local-v6
